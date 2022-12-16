@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+
+  onClick( event: any) {
+    console.log("button clicked", event);
+  }
 }

@@ -1,0 +1,43 @@
+.k-textbox .send-button {
+  color: #ff6358;
+  width: 44px;
+}
+
+
+div.cc{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0px 26px 17px;
+  gap: 10px;
+
+  position: relative;
+  left:0px;
+  right:0px;
+  height: 799px;
+
+  background: #9eabe1;
+}
+
+
+div.inner{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 19px;
+
+  width: 231px;
+  height: 92px;
+
+  background: #D61B1B;
+  border-radius: 30px;
+
+  /* Inside auto layout */
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
