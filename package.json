@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --configuration=development --host 0.0.0.0 --disable-host-check",
+    "build": "ng build --configuration=production",
+    "publish": "cd /home/sp/superforex/sls/meeting.webtradepay.au/  && sls client deploy && cd ~/WebstormProjects/webmeeting",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
