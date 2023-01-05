@@ -1,24 +1,16 @@
-<div class="cc" id="jaas_container">
-</div>
 
 
-<kendo-label class="k-form" text="Message">
-  <kendo-textbox
-    [style.width.px]="300"
-    placeholder="Type your message here"
-    [clearButton]="true"
-  >
-    <ng-template kendoTextBoxPrefixTemplate>
-      <button kendoButton fillMode="clear" icon="image"></button>
-      <button kendoButton fillMode="clear" icon="calendar"></button>
-      <kendo-textbox-separator></kendo-textbox-separator>
-    </ng-template>
-    <ng-template kendoTextBoxSuffixTemplate>
-      <kendo-textbox-separator></kendo-textbox-separator>
-      <button kendoButton fillMode="clear" class="send-button" (click)="onClick($event)">Send</button>
-    </ng-template>
-  </kendo-textbox>
-</kendo-label>
 
+<h1>{{title}}</h1>
+<p>begin</p>
+<!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
+<nav>
+  <ul>
+    <li><a routerLink="/vc" routerLinkActive="active" >VC</a></li>
+    <li><a routerLink="/login" routerLinkActive="active" >lkogin</a></li>
+  </ul>
+</nav>
+<!-- The routed views render in the <router-outlet>-->
+<router-outlet></router-outlet>
 
-<kendo-icon name="trash"></kendo-icon>
+<p>end</p>

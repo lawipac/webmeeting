@@ -7,6 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { IconsModule } from '@progress/kendo-angular-icons';
 import {ButtonsModule} from "@progress/kendo-angular-buttons";
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './login/login.component';
+import { VcComponent } from './vc/vc.component';
 
 
 
@@ -14,7 +17,9 @@ import {ButtonsModule} from "@progress/kendo-angular-buttons";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    VcComponent
   ],
   imports: [
     BrowserModule,
@@ -23,6 +28,7 @@ import {ButtonsModule} from "@progress/kendo-angular-buttons";
     LabelModule,
     IconsModule,
     ButtonsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
