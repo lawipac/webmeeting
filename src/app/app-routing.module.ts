@@ -8,7 +8,7 @@ import {VcComponent} from "./vc/vc.component";
 const routes: Routes = [
   { path: 'vc', component: VcComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'login/:id/:pin', component: LoginComponent }
+  { path: 'login/:token', component: LoginComponent }
 ];
 
 @NgModule({
