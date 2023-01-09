@@ -2,6 +2,7 @@ import {Component, HostListener} from '@angular/core';
 import { environment } from '../environments/environment';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppService} from "./services/app.service";
+import {WebsocketService} from "./services/websocket.service";
 
 @Component({
   selector: 'app-root',
@@ -19,8 +20,11 @@ export class AppComponent {
   };
 
 
-  constructor(private app: AppService) {
+  constructor(private app: AppService, private ws: WebsocketService) {
     console.log(this.app.env);
+    this.ws.messages.subscribe(msg => {
+      console.log("received message ", msg);
+    });
   }
   public registerForm: FormGroup = new FormGroup({
     nickName: new FormControl(),
