@@ -22,9 +22,31 @@ export interface WsMessage {
 export class WebsocketService {
   //@ts-ignore
   private subject: AnonymousSubject<MessageEvent> ;
+  // @ts-ignore
   public messages: Subject<WsMessage>;
+  private sendQueue: WsMessage[] =[];
+  //@ts-ignore
+  private ws : WebSocket;
 
   constructor() {
+    this.reconnect();
+  }
+
+  public connect(url: string): AnonymousSubject<MessageEvent> {
+    this.close();
+    //perform connection or re-connection
+    this.subject = this.create(url);
+    console.log("Successfully connected: " + url);
+    return this.subject;
+  }
+
+  public close() {
+    if (this.subject) {
+      this.subject.complete(); //close any existing websocket
+    }
+  }
+
+  public reconnect() {
     this.messages = <Subject<WsMessage>>this.connect(environment.wss).pipe(
       map(
         (response: MessageEvent): WsMessage => {
@@ -35,17 +57,6 @@ export class WebsocketService {
       )
     );
   }
-
-  public connect(url: string): AnonymousSubject<MessageEvent> {
-    if (this.subject) {
-      this.subject.complete(); //close any existing websocket
-    }
-    //perform connection or re-connection
-    this.subject = this.create(url);
-    console.log("Successfully connected: " + url);
-    return this.subject;
-  }
-
   private create(url: string): AnonymousSubject<MessageEvent> {
     let ws = new WebSocket(url);
     let observable = new Observable((obs: Observer<MessageEvent>) => {
@@ -54,9 +65,11 @@ export class WebsocketService {
       ws.onclose = obs.complete.bind(obs);
       return ws.close.bind(ws);
     });
+    ws.onopen = this.onOpen.bind(this);
+    this.ws = ws;
     let observer = {
-      error: null,
-      complete: null,
+      error: (err: Object) => console.log("websocket error", err),
+      complete: () => console.log("websocket closed"),
       next: (data: Object) => {
         console.log('Message sent to websocket: ', data);
         if (ws.readyState === WebSocket.OPEN) {
@@ -68,7 +81,22 @@ export class WebsocketService {
     return new AnonymousSubject<MessageEvent>(observer, observable);
   }
 
+  public onOpen(): void{
+    while(this.sendQueue.length > 0){
+      let m = this.sendQueue.pop();
+      if (m != undefined) {
+        this.messages.next(m);
+      }
+    };
+  }
+
   public send( m: WsMessage) : void{
-    this.messages.next(m);
+    if (this.ws.readyState != 1){ //not opened
+      console.log("queued");
+      this.sendQueue.push(m);
+    } else{
+      console.log("direct send");
+      this.messages.next(m);
+    }
   }
 }

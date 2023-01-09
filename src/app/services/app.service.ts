@@ -33,7 +33,9 @@ export class AppService {
   public checkHiddenDocument() {
     if (document.hidden) {
       this.announceInvisible();
+      this.ws.close();
     } else {
+      this.ws.reconnect();
       this.announceVisible();
     }
   }
