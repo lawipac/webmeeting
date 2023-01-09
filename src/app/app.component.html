@@ -9,39 +9,44 @@
       <form class="k-form" [formGroup]="registerForm">
         <fieldset class="k-form-fieldset">
           <kendo-formfield>
-            <kendo-label [for]="nickName" text="Your Name(optional)"></kendo-label>
+            <kendo-label [for]="nickName" text="Your Name (optional)" ></kendo-label>
             <input
               formControlName="nickName"
               kendoTextBox
               #nickName
+              placeholder="John doe"
             />
-
-            <kendo-formhint>Your nick name</kendo-formhint>
-            <kendo-formerror>Error: name is required</kendo-formerror>
+            <kendo-formerror>Error: name is too long (less than 100 char)</kendo-formerror>
           </kendo-formfield>
 
           <kendo-formfield>
             <kendo-label [for]="email" text="Email"></kendo-label>
-            <input formControlName="email" kendoTextBox #email required />
+            <input formControlName="email" kendoTextBox #email required
+                   email="true" placeholder="user@email.com"
+                   (blur)="emailInputBlur($event)"
+            />
 
-            <kendo-formhint>we send pin to it</kendo-formhint>
+            <kendo-formhint>{{hint.email}}</kendo-formhint>
             <kendo-formerror>Error: Not valid email format</kendo-formerror>
           </kendo-formfield>
 
           <kendo-formfield>
             <kendo-label [for]="pin" text="Verification Code"></kendo-label>
-            <input formControlName="pin" kendoTextBox #pin required />
+            <input formControlName="pin" kendoTextBox #pin required placeholder="0000"/>
 
-            <kendo-formhint>{{pinHint}}</kendo-formhint>
+            <kendo-formhint>{{hint.pin}}</kendo-formhint>
             <kendo-formerror>Error: Verification Code is required</kendo-formerror>
           </kendo-formfield>
 
 
           <div class="k-form-buttons">
-            <button kendoButton themeColor="primary" (click)="submitForm()">
-              Submit
+            <button class="join" *ngIf="otpSent" kendoButton themeColor="primary" (click)="onLoginClick()">
+              Join Meeting
             </button>
-            <button kendoButton (click)="clearForm()">Clear</button>
+            <button class="join" *ngIf="!otpSent"kendoButton themeColor="primary" (click)="onOtpClick()">
+              Get Verification Code
+            </button>
+
           </div>
         </fieldset>
       </form>
