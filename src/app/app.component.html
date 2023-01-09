@@ -1,16 +1,58 @@
+<video id="bgVideo" autoplay loop muted playsinline>
+    <source src="https://c5015.biukop.com.au/bokeh2.mp4" type="video/mp4">
+</video>
 
 
+<div class="container">
+  <div class="screen">
+    <div class="screen__content center">
+      <form class="k-form" [formGroup]="registerForm">
+        <fieldset class="k-form-fieldset">
+          <kendo-formfield>
+            <kendo-label [for]="nickName" text="Your Name(optional)"></kendo-label>
+            <input
+              formControlName="nickName"
+              kendoTextBox
+              #nickName
+            />
 
-<h1>{{title}}</h1>
-<p>begin</p>
-<!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
-<nav>
-  <ul>
-    <li><a routerLink="/vc" routerLinkActive="active" >VC</a></li>
-    <li><a routerLink="/login" routerLinkActive="active" >lkogin</a></li>
-  </ul>
-</nav>
-<!-- The routed views render in the <router-outlet>-->
-<router-outlet></router-outlet>
+            <kendo-formhint>Your nick name</kendo-formhint>
+            <kendo-formerror>Error: name is required</kendo-formerror>
+          </kendo-formfield>
 
-<p>end</p>
+          <kendo-formfield>
+            <kendo-label [for]="email" text="Email"></kendo-label>
+            <input formControlName="email" kendoTextBox #email required />
+
+            <kendo-formhint>we send pin to it</kendo-formhint>
+            <kendo-formerror>Error: Not valid email format</kendo-formerror>
+          </kendo-formfield>
+
+          <kendo-formfield>
+            <kendo-label [for]="pin" text="Verification Code"></kendo-label>
+            <input formControlName="pin" kendoTextBox #pin required />
+
+            <kendo-formhint>{{pinHint}}</kendo-formhint>
+            <kendo-formerror>Error: Verification Code is required</kendo-formerror>
+          </kendo-formfield>
+
+
+          <div class="k-form-buttons">
+            <button kendoButton themeColor="primary" (click)="submitForm()">
+              Submit
+            </button>
+            <button kendoButton (click)="clearForm()">Clear</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="logo"></div>
+    <div class="screen__background">
+      <span class="screen__background__shape screen__background__shape4"></span>
+      <span class="screen__background__shape screen__background__shape3"></span>
+      <span class="screen__background__shape screen__background__shape2"></span>
+      <span class="screen__background__shape screen__background__shape1"></span>
+    </div>
+  </div>
+</div>
+

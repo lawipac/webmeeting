@@ -10,6 +10,11 @@ import {ButtonsModule} from "@progress/kendo-angular-buttons";
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
 import { VcComponent } from './vc/vc.component';
+import { LayoutModule } from '@progress/kendo-angular-layout';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 
 
@@ -29,6 +34,10 @@ import { VcComponent } from './vc/vc.component';
     IconsModule,
     ButtonsModule,
     AppRoutingModule,
+    LayoutModule,
+    DateInputsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
