@@ -23,7 +23,7 @@ export class WebsocketService {
   //@ts-ignore
   private subject: AnonymousSubject<MessageEvent> ;
   // @ts-ignore
-  public messages: Subject<WsMessage>;
+  public messages: Subject<WsMessage> = {} as Subject<WsMessage> ;
   private sendQueue: WsMessage[] =[];
   //@ts-ignore
   private ws : WebSocket;

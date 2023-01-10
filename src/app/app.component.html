@@ -6,48 +6,49 @@
 <div class="container">
   <div class="screen">
     <div class="screen__content center">
-      <form class="k-form" [formGroup]="registerForm">
+      <form class="k-form" [formGroup]="registerForm" >
         <fieldset class="k-form-fieldset">
-          <kendo-formfield>
-            <kendo-label [for]="nickName" text="Your Name (optional)" ></kendo-label>
-            <input
-              formControlName="nickName"
-              kendoTextBox
-              #nickName
-              placeholder="John doe"
-            />
-            <kendo-formerror>Error: name is too long (less than 100 char)</kendo-formerror>
-          </kendo-formfield>
 
           <kendo-formfield>
-            <kendo-label [for]="email" text="Email"></kendo-label>
-            <input formControlName="email" kendoTextBox #email required
-                   email="true" placeholder="user@email.com"
-                   (blur)="emailInputBlur($event)"
-            />
-
+            <kendo-floatinglabel text="Enter Your Email">
+              <input formControlName="email" kendoTextBox #email required
+                     email="true" placeholder="user@email.com"
+                     (blur)="emailInputBlur($event)"
+              />
+            </kendo-floatinglabel>
             <kendo-formhint>{{hint.email}}</kendo-formhint>
             <kendo-formerror>Error: Not valid email format</kendo-formerror>
           </kendo-formfield>
 
-          <kendo-formfield>
-            <kendo-label [for]="pin" text="Verification Code"></kendo-label>
-            <input formControlName="pin" kendoTextBox #pin required placeholder="0000"/>
-
+          <kendo-formfield *ngIf="showOtpInput()" >
+            <kendo-floatinglabel text="Verification Code">
+              <input formControlName="pin" kendoTextBox #pin required placeholder="0000"/>
+            </kendo-floatinglabel>
             <kendo-formhint>{{hint.pin}}</kendo-formhint>
             <kendo-formerror>Error: Verification Code is required</kendo-formerror>
           </kendo-formfield>
 
+          <kendo-formfield *ngIf="showNameInput()">
+            <kendo-floatinglabel text="Your Name (optional)">
+              <input
+                formControlName="nickName"
+                kendoTextBox
+                #nickName
+                placeholder="John doe"
+              />
+            </kendo-floatinglabel>
+            <kendo-formerror>Error: name is too long (less than 100 char)</kendo-formerror>
+          </kendo-formfield>
 
           <div class="k-form-buttons">
-            <button class="join" *ngIf="otpSent" kendoButton themeColor="primary" (click)="onLoginClick()">
+            <button class="join" *ngIf="showLogin() " kendoButton themeColor="primary" (click)="onLoginClick()">
               Join Meeting
             </button>
-            <button class="join" *ngIf="!otpSent"kendoButton themeColor="primary" (click)="onOtpClick()">
+            <button class="join" *ngIf="!showLogin()"kendoButton themeColor="primary" (click)="onOtpClick()">
               Get Verification Code
             </button>
-
           </div>
+
         </fieldset>
       </form>
     </div>

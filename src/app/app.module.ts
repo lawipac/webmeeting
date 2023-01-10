@@ -14,6 +14,8 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NotificationModule } from '@progress/kendo-angular-notification';
 
 
 
@@ -37,7 +39,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LayoutModule,
     DateInputsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    NotificationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
