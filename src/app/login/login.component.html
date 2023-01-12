@@ -1,6 +1,73 @@
-<p>login works!</p>
+<div class="container">
+  <div class="screen">
+    <div class="screen__content center">
+      <form class="k-form" [formGroup]="registerForm" >
+        <fieldset class="k-form-fieldset">
+
+          <kendo-formfield>
+            <kendo-floatinglabel text="Enter Your Email">
+              <input formControlName="email" kendoTextBox #email required
+                     email="true" placeholder="user@email.com"
+              />
+            </kendo-floatinglabel>
+            <kendo-formhint>{{hint.email}}</kendo-formhint>
+            <kendo-formerror>Error: Not valid email format</kendo-formerror>
+          </kendo-formfield>
+
+          <kendo-formfield *ngIf="showOtpInput()" >
+            <kendo-floatinglabel text="Verification Code">
+              <input formControlName="otp" kendoTextBox #otp required placeholder="0000" (keydown)="onOTPKeyDown()"/>
+            </kendo-floatinglabel>
+            <kendo-formhint>{{hint.otp}}</kendo-formhint>
+            <kendo-formerror>Error: Verification Code is required</kendo-formerror>
+          </kendo-formfield>
+
+          <kendo-formfield *ngIf="showNameInput()">
+            <kendo-floatinglabel text="Your Name (optional)">
+              <input
+                formControlName="nickName"
+                kendoTextBox
+                #nickName
+                placeholder="John doe"
+              />
+            </kendo-floatinglabel>
+            <kendo-formerror>Error: name is too long (less than 100 char)</kendo-formerror>
+          </kendo-formfield>
+
+          <div class="k-form-buttons">
+            <button class="join" *ngIf="showLogin() " kendoButton themeColor="primary" (click)="onLoginClick()">
+              Join Meeting
+            </button>
+            <button class="join" *ngIf="!showLogin()"kendoButton themeColor="primary" (click)="onOtpClick()">
+              Get Verification Code
+            </button>
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+    <div class="logo"></div>
+    <div class="screen__background">
+      <span class="screen__background__shape screen__background__shape4"></span>
+      <span class="screen__background__shape screen__background__shape3"></span>
+      <span class="screen__background__shape screen__background__shape2"></span>
+      <span class="screen__background__shape screen__background__shape1"></span>
+    </div>
+  </div>
+</div>
 
 
-{{email}}
-
-{{otp}}
+<kendo-dialog
+  title="Please confirm"
+  *ngIf="opened"
+  (close)="close('cancel')"
+  [minWidth]="250"
+  [width]="450"
+>
+  <p style="margin: 30px; text-align: center;">
+    {{dialogMessage}}
+  </p>
+  <kendo-dialog-actions>
+    <button kendoButton (click)="close('close')">OK, got it</button>
+  </kendo-dialog-actions>
+</kendo-dialog>
