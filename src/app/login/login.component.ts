@@ -77,7 +77,7 @@ export class LoginComponent {
           if (data.status == true)
             this.router.navigate(['/vc']);
           else{
-            this.dialogMessage="Magic link has expired, please get another code";
+            this.dialogMessage="Magic link expired, please get another code";
             this.opened = true;
           }
         }

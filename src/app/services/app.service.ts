@@ -11,7 +11,6 @@ export class AppService {
   public env = environment;
   public subject = webSocket(environment.wss);
 
-
   constructor(private ws: WebsocketService) {
   }
 

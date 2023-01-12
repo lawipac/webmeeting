@@ -28,6 +28,9 @@ export class AppComponent {
     });
   }
 
+  ngOnInit(){
+    this.router.navigate(['login']);
+  }
 
   @HostListener('document:visibilitychange', ['$event'])
   visibilitychange() {
