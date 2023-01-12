@@ -14,9 +14,10 @@ import { LayoutModule } from '@progress/kendo-angular-layout';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { NotificationModule } from '@progress/kendo-angular-notification';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
+import {AuthInterceptor} from "./services/auth.service";
 
 
 
@@ -46,7 +47,9 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
     NotificationModule,
     DialogsModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

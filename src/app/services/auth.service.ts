@@ -1,6 +1,8 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable} from "rxjs";
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
+import {environment} from "../../environments/environment";
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
@@ -15,6 +17,10 @@ export class AuthService {
 
   public setToken(t: string){
     this.authToken = t;
+  }
+
+  public token(): string{
+    return this.authToken;
   }
 
   public setOtp(v : string) {
@@ -52,5 +58,26 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree {
     return this.auth.isAuth();
+  }
+}
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private auth: AuthService) { }
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // add auth header with jwt if account is logged in and request is to the api url
+    if (this.auth.isAuth()) {
+      request = request.clone({
+        setHeaders: { Authorization: `Bearer ${this.auth.token()}` }
+      });
+    }else{
+      request = request.clone({
+        setHeaders: { Authorization: `Bearer fuck you all ` }
+      });
+
+    }
+
+    return next.handle(request);
   }
 }
