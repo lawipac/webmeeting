@@ -1,5 +1,12 @@
 import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, RouterStateSnapshot, UrlTree} from "@angular/router";
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  Router,
+  RouterStateSnapshot,
+  UrlTree
+} from "@angular/router";
 import {Observable} from "rxjs";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {environment} from "../../environments/environment";
@@ -51,19 +58,24 @@ export class AuthService {
 
 @Injectable({ providedIn: 'root'})
 export class AuthGuard implements CanActivate {
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree {
-    return this.auth.isAuth();
+    if ( this.auth.isAuth() ){
+      return true;
+    }else{
+      this.router.navigate(['login']);
+    }
+    return false;
   }
 }
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // add auth header with jwt if account is logged in and request is to the api url
@@ -73,11 +85,9 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }else{
       request = request.clone({
-        setHeaders: { Authorization: `Bearer fuck you all ` }
+        setHeaders: { Authorization: `Bearer unauthorized` }
       });
-
     }
-
     return next.handle(request);
   }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {MeetingItem} from "../interface/api.response.interface";
 
 @Component({
   selector: 'app-vc',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./vc.component.css']
 })
 export class VcComponent {
-
+  meetings: MeetingItem[] = [];
 }

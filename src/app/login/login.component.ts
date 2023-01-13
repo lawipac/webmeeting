@@ -7,6 +7,7 @@ import {AppService} from "../services/app.service";
 import {WebsocketService} from "../services/websocket.service";
 import {HttpsService} from "../services/https.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "../services/auth.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -27,6 +28,7 @@ export class LoginComponent {
   otpResponse: ROtp= { otp: "" } as ROtp;
   constructor(private route: ActivatedRoute, private app: AppService,
               private ws: WebsocketService,
+              private auth: AuthService,
               private https: HttpsService ,
               private cdRef : ChangeDetectorRef,
               private router: Router) {
@@ -74,9 +76,13 @@ export class LoginComponent {
       this.https.login({email: email,otp: otp, nick: nickName}).subscribe(
         data => {
           console.log(data);
-          if (data.status == true)
-            this.router.navigate(['/vc']);
-          else{
+          if (data.status == true) {
+            this.auth.setOtp(data.otp);
+            this.auth.setTS(data.ts);
+            this.auth.setToken(data.auth);
+            this.auth.setTTL(data.ttl);
+            let _ = this.router.navigate(['/vc']);
+          }else{
             this.dialogMessage="Magic link expired, please get another code";
             this.opened = true;
           }

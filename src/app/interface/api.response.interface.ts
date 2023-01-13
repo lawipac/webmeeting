@@ -50,6 +50,8 @@ export interface Rlogin{
   match: boolean;
   expired: boolean;
   ttl: number;
+  otp: string;
+  auth: string;//token
 }
 
 export interface SQueryMeeting{

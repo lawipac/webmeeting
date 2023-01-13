@@ -18,6 +18,9 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { NotificationModule } from '@progress/kendo-angular-notification';
 import { DialogsModule } from '@progress/kendo-angular-dialog';
 import {AuthInterceptor} from "./services/auth.service";
+import { ListViewModule } from '@progress/kendo-angular-listview';
+import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
+
 
 
 
@@ -29,7 +32,8 @@ import {AuthInterceptor} from "./services/auth.service";
   declarations: [
     AppComponent,
     LoginComponent,
-    VcComponent
+    VcComponent,
+    ScheduleMeetingComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import {AuthInterceptor} from "./services/auth.service";
     ReactiveFormsModule,
     HttpClientModule,
     NotificationModule,
-    DialogsModule
+    DialogsModule,
+    ListViewModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
