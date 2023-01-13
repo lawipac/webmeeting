@@ -2,14 +2,12 @@ import {Injectable} from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   CanActivate,
-  CanActivateChild,
   Router,
   RouterStateSnapshot,
   UrlTree
 } from "@angular/router";
 import {Observable} from "rxjs";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {environment} from "../../environments/environment";
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
@@ -67,7 +65,7 @@ export class AuthGuard implements CanActivate {
     if ( this.auth.isAuth() ){
       return true;
     }else{
-      this.router.navigate(['login']);
+      let _ = this.router.navigate(['login']);
     }
     return false;
   }

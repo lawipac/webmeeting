@@ -20,6 +20,8 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 import {AuthInterceptor} from "./services/auth.service";
 import { ListViewModule } from '@progress/kendo-angular-listview';
 import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+
 
 
 
@@ -50,7 +52,8 @@ import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.co
     HttpClientModule,
     NotificationModule,
     DialogsModule,
-    ListViewModule
+    ListViewModule,
+    DropDownsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
