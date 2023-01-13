@@ -29,7 +29,7 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    let _ = this.router.navigate(['test']);
+    // let _ = this.router.navigate(['test']);
   }
 
   @HostListener('document:visibilitychange', ['$event'])

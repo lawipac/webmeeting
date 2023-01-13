@@ -7,5 +7,5 @@ import {MeetingItem} from "../interface/api.response.interface";
   styleUrls: ['./vc.component.scss']
 })
 export class VcComponent {
-  meetings: MeetingItem[] = [];
+
 }

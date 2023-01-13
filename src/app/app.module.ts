@@ -21,6 +21,7 @@ import {AuthInterceptor} from "./services/auth.service";
 import { ListViewModule } from '@progress/kendo-angular-listview';
 import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 
@@ -35,7 +36,8 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
     AppComponent,
     LoginComponent,
     VcComponent,
-    ScheduleMeetingComponent
+    ScheduleMeetingComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

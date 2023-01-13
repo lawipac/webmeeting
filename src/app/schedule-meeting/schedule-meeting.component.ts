@@ -3,10 +3,6 @@ import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angul
 import {MeetingItem} from "../interface/api.response.interface";
 import {AuthService} from "../services/auth.service";
 
-interface Item {
-  text: string;
-  value: number;
-}
 @Component({
   selector: 'app-schedule-meeting',
   templateUrl: './schedule-meeting.component.html',
@@ -18,7 +14,7 @@ export class ScheduleMeetingComponent {
   ];
   public form: FormGroup;
   public strGuests = "Invite 1 guest";
-  public durationOptions : Array<Item> = [
+  public durationOptions = [
     {text: "30 minutes", value : 1800001},
     {text: "60 minutes", value: 3600002},
     {text: "1.5 Hours", value : 4800003},

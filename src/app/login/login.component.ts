@@ -81,7 +81,7 @@ export class LoginComponent {
             this.auth.setTS(data.ts);
             this.auth.setToken(data.auth);
             this.auth.setTTL(data.ttl);
-            let _ = this.router.navigate(['/vc']);
+            let _ = this.router.navigate(['/dash']);
           }else{
             this.dialogMessage="Magic link expired, please get another code";
             this.opened = true;

@@ -1,0 +1,15 @@
+<div style="position: relative; left:0; right:0; top:0; bottom:0; text-align: center; display:flex">
+  <div style="width:80%; margin:auto; top:100px;">
+    <app-schedule-meeting></app-schedule-meeting>
+  </div>
+</div>
+
+<kendo-listview
+  [data]="meetings"
+  [style.height.px]="280"
+  [itemClass]="{ 'item-border': true }"
+>
+  <ng-template kendoListViewItemTemplate let-dataItem="dataItem">
+    {{ dataItem.ProductName }}
+  </ng-template>
+</kendo-listview>
