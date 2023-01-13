@@ -1,3 +1,38 @@
 <div class="container">
-  <kendo-combobox [data]="rooms" [allowCustom]="true"> </kendo-combobox>
+  <form [formGroup]="form">
+    <kendo-formfield>
+      <kendo-floatinglabel text="Select a room">
+        <kendo-combobox formControlName="room" [data]="rooms" [allowCustom]="true" [valuePrimitive]="true" required>
+        </kendo-combobox>
+      </kendo-floatinglabel>
+      <kendo-formerror>Error: room is required and should be short</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <input formControlName="start" kendoTextBox #otp required placeholder="0000" />
+    </kendo-formfield>
+
+    <table class="table table-bordered" formArrayName="guests">
+      <tr>
+        <th colspan="2">Invited Guests:</th>
+        <th width="150px"><button type="button" (click)="addGuest()" class="btn btn-primary">Add More</button></th>
+      </tr>
+      <tr *ngFor="let quantity of guests().controls; let i=index" [formGroupName]="i">
+        <td>
+          Quantity :
+          <input type="text" formControlName="name" class="form-control">
+        </td>
+        <td>
+          Price:
+          <input type="text" formControlName="email" class="form-control">
+        </td>
+        <td>
+          <button (click)="removeGuest(i)" class="btn btn-danger">Remove</button>
+        </td>
+      </tr>
+    </table>
+
+
+    <button type="submit" kendoButton themeColor="primary" class="btn btn-success" (click)="onSubmit()">Submit</button>
+  </form>
 </div>
