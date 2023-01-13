@@ -1,3 +1,102 @@
 kendo-floatinglabel {
   width: 100%;
 }
+
+
+.bg {
+  animation:slide 3s ease-in-out infinite alternate;
+  background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+  bottom:0;
+  left:-50%;
+  opacity:.5;
+  position:fixed;
+  right:-50%;
+  top:0;
+  z-index:-1;
+}
+
+.bg2 {
+  animation-direction:alternate-reverse;
+  animation-duration:4s;
+}
+
+.bg3 {
+  animation-duration:5s;
+}
+
+.content {
+  min-width: 500px;
+  background-color:rgba(255,255,255,.8);
+  border-radius:.25em;
+  box-shadow:0 0 .25em rgba(0,0,0,.25);
+  box-sizing:border-box;
+  left:50%;
+  padding:2vmin;
+  position:fixed;
+  text-align:center;
+  top:50%;
+  transform:translate(-50%, -50%);
+
+  kendo-formfield{
+    padding:10px 0 10px 0 ;
+    margin: 0 10px 0 10px;
+    div.radioGroup{
+      display: flex;
+      padding-bottom: 10px;
+      padding-top: 10px;
+      div.radio{
+        width: 49%;
+        display:block;
+      }
+    }
+    div.row{
+      display: flex;
+      div.label{
+        text-align: center;
+        width: 20%;
+      }
+      div.control{
+        width: 79%;
+      }
+    }
+  }
+  div.guests{
+    .formArray{
+      .row{
+        width:100%;
+        display: flex;
+        position: relative;
+        padding-bottom: 5px;
+        kendo-formfield{
+          padding:0;
+          margin:0;
+        }
+        .email{
+          width:50%;
+        }
+        .nick{
+          width: 44%;
+        }
+        .remove{
+          width:32px;
+          position: absolute;
+          right:0;
+          bottom:5px;
+        }
+      }
+    }
+    kendo-label{
+      padding-right: 20px;
+    }
+  }
+}
+
+
+@keyframes slide {
+  0% {
+    transform:translateX(-25%);
+  }
+  100% {
+    transform:translateX(25%);
+  }
+}

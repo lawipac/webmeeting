@@ -1,4 +1,7 @@
-<div class="container">
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>
+<div class="content">
   <form [formGroup]="form">
     <kendo-formfield>
       <kendo-floatinglabel text="Select a room">
@@ -8,31 +11,84 @@
       <kendo-formerror>Error: room is required and should be short</kendo-formerror>
     </kendo-formfield>
 
-    <kendo-formfield>
-      <input formControlName="start" kendoTextBox #otp required placeholder="0000" />
+    <kendo-formfield  orientation="horizontal">
+      <div class="radioGroup">
+        <div class="radio">
+          <input type="radio" name="public"  value="100" kendoRadioButton formControlName="public" #public />
+        <kendo-label [for]="public" text="Public Conference"></kendo-label>
+        </div>
+        <div class="radio">
+          <input type="radio"  name="public" value="0"kendoRadioButton formControlName="public" #private />
+          <kendo-label [for]="private" text="Private Meeting"></kendo-label>
+        </div>
+      </div>
+    </kendo-formfield>
+    <kendo-formfield orientation="horizontal">
+
+      <div class="row">
+        <div class="control">
+        <kendo-datetimepicker [format]="'MM/dd/yyyy HH:mm'" formControlName="startDate" #startDate> </kendo-datetimepicker>
+        </div>
+        <div class="label">
+          <kendo-label [for]="startDate" text="(Start time)"></kendo-label>
+        </div>
+
+      </div>
     </kendo-formfield>
 
-    <table class="table table-bordered" formArrayName="guests">
-      <tr>
-        <th colspan="2">Invited Guests:</th>
-        <th width="150px"><button type="button" (click)="addGuest()" class="btn btn-primary">Add More</button></th>
-      </tr>
-      <tr *ngFor="let quantity of guests().controls; let i=index" [formGroupName]="i">
-        <td>
-          Quantity :
-          <input type="text" formControlName="name" class="form-control">
-        </td>
-        <td>
-          Price:
-          <input type="text" formControlName="email" class="form-control">
-        </td>
-        <td>
-          <button (click)="removeGuest(i)" class="btn btn-danger">Remove</button>
-        </td>
-      </tr>
-    </table>
+    <kendo-formfield orientation="horizontal">
+      <div class="row">
+      <div class="control">
+        <kendo-dropdownlist [data]="durationOptions"   formControlName="duration"
+                            [defaultItem]="durationOptions[1]"
+                            [valuePrimitive]="true"
+                            textField="text"
+                            valueField="value" #duration>
+        </kendo-dropdownlist>
+      </div>
+      <div class="label">
+        <kendo-label [for]="startDate" text="(Durations)" [for]="duration"></kendo-label>
+      </div>
+      </div>
+    </kendo-formfield>
 
+    <div class="guests" *ngIf="form.value.public == '0' ">
 
-    <button type="submit" kendoButton themeColor="primary" class="btn btn-success" (click)="onSubmit()">Submit</button>
+        <kendo-label text="{{strGuests}}">
+          <kendo-slider
+            incrementTitle="Inc"
+            decrementTitle="Dec"
+            [min]="1"
+            [max]="5"
+            [smallStep]="1"
+            formControlName="numOfGuests"
+            (valueChange)="onChangeNumOfGuests()"
+            #slider
+          ></kendo-slider>
+        </kendo-label>
+
+      <div formArrayName="guests" class="formArray">
+        <div class="row" *ngFor="let quantity of guests().controls; let i=index" [formGroupName]="i">
+          <div class="email">
+            <kendo-formfield class="inline">
+              <kendo-floatinglabel text="Email">
+                <input type="text" kendoTextBox formControlName="email" class="form-control">
+              </kendo-floatinglabel>
+              <kendo-formerror>A valid email is required</kendo-formerror>
+            </kendo-formfield>
+          </div>
+          <div class="nick">
+            <kendo-floatinglabel text="Name(Optional)">
+            <input type="text" kendoTextBox formControlName="name" class="form-control">
+            </kendo-floatinglabel>
+          </div>
+          <div class="remove">
+            <span class="k-icon k-i-x-circle k-icon-xl" (click)="removeGuest(i)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" kendoButton themeColor="primary" class="btn btn-success" (click)="onSubmit()">Create Meeting</button>
   </form>
 </div>
