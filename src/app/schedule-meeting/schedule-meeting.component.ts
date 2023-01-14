@@ -11,6 +11,9 @@ import {AuthService} from "../services/auth.service";
 export class ScheduleMeetingComponent {
   @Output()
   meetingCreatedEvent: EventEmitter<MeetingItem> =new EventEmitter<MeetingItem>();
+  @Output()
+  abandonedEvent: EventEmitter<null> = new EventEmitter<null>();
+
   public rooms: Array<string> = [
     "Auditorium","Public","Seminar","Enquiry","Presale","CustomSupport","Conference"
   ];
@@ -97,5 +100,9 @@ export class ScheduleMeetingComponent {
     };
     console.log(this.form.value, item);
     this.meetingCreatedEvent.emit(item);
+  }
+
+  onCancel() {
+    this.abandonedEvent.emit();
   }
 }

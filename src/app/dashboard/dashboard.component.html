@@ -1,6 +1,7 @@
 <div style="position: relative; left:0; right:0; top:0; bottom:0; text-align: center; display:flex">
   <div style="width:80%; margin:auto; top:100px;">
-    <app-schedule-meeting (meetingCreatedEvent)="onCreate($event)"></app-schedule-meeting>
+    <app-schedule-meeting *ngIf="createMeeting"
+      (meetingCreatedEvent)="onCreate($event)" (abandonedEvent)="onCancel()"></app-schedule-meeting>
   </div>
 </div>
 

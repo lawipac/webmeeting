@@ -19,7 +19,7 @@ export class VcComponent {
               private location: Location,
               private router: Router) {
   }
-  ngOnInit(){
+  ngAfterViewInit(){
     if (!this.readyToMeeting()){
         this.back();
     }else{
@@ -35,13 +35,26 @@ export class VcComponent {
     return this.auth.validJWT(this.app.room);
   }
 
+  getUIConfig(){
+    let moderatorConfig = {
+      prejoinPageEnabled: false,
+      toolbarButtons: ['hangup', 'microphone', 'recording', 'camera'],
+    };
+    let guestConfig = {
+      prejoinPageEnabled: false,
+      toolbarButtons: ['hangup', 'microphone',  'camera'],
+    }
+    if (this.auth.isModerator()){
+      return moderatorConfig;
+    }else{
+      return guestConfig;
+    }
+  }
   private startMeeting() {
+
     this.api = new JitsiMeetExternalAPI("8x8.vc", {
       roomName: this.app.appID + "/" + this.app.room,
-      // configOverwrite: {
-      //   prejoinPageEnabled: false,
-      //   toolbarButtons: ['hangup', 'microphone', 'recording', 'camera'],
-      // },
+      configOverwrite: this.getUIConfig(),
       parentNode: document.querySelector('#jaas_container'),
       jwt:this.auth.getJwt(),
       userInfo:{
@@ -58,6 +71,7 @@ export class VcComponent {
       audioMuteStatusChanged: this.handleMuteStatus,
       videoMuteStatusChanged: this.handleVideoStatus
     });
+    console.log(this.api);
   }
 
   handleClose = () => {

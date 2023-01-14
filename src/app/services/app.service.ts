@@ -7,7 +7,7 @@ import {WsMessage, WebsocketService, MChat} from "./websocket.service";
 @Injectable({ providedIn: 'root'})
 export class AppService {
   appID = "vpaas-magic-cookie-35408203be1646ac811594fa79ddb6ce";// for superforex
-  public room ="";
+  public room ="test1234";
   public env = environment;
   public subject = webSocket(environment.wss);
 

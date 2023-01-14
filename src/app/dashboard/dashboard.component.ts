@@ -8,8 +8,13 @@ import {MeetingItem} from "../interface/api.response.interface";
 })
 export class DashboardComponent {
   meetings: MeetingItem[] = [];
+  createMeeting = true;
 
   onCreate(item: MeetingItem) {
     console.log("in parent",item);
+  }
+
+  onCancel() {
+    this.createMeeting=false;
   }
 }
