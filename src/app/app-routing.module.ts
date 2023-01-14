@@ -12,9 +12,9 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [
   { path: 'test/sm', component: ScheduleMeetingComponent },
-  { path: 'test/vc/:room', component: VcComponent },
+  { path: 'test/vc', component: VcComponent },
   { path: 'test/dash', component: DashboardComponent },
-  { path: 'vc/:room', canActivate:[AuthGuard], component: VcComponent },
+  { path: 'vc', canActivate:[AuthGuard], component: VcComponent },
   { path: 'dash', canActivate:[AuthGuard], component: DashboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login/:token', component: LoginComponent },
