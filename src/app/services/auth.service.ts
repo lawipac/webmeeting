@@ -62,7 +62,7 @@ export class AuthService {
     //decode jwt and match room
     let decodedJWT = JSON.parse(window.atob(this.jwt.split('.')[1]));
     console.log(decodedJWT);
-    return decodedJWT.room == "*" || decodedJWT.room == room;
+    return room!="" && (decodedJWT.room == "*" || decodedJWT.room == room);
   }
 }
 

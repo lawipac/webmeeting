@@ -1,4 +1,4 @@
-import {Component, NgIterable} from '@angular/core';
+import {Component, EventEmitter, NgIterable, Output} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MeetingItem} from "../interface/api.response.interface";
 import {AuthService} from "../services/auth.service";
@@ -9,6 +9,8 @@ import {AuthService} from "../services/auth.service";
   styleUrls: ['./schedule-meeting.component.scss']
 })
 export class ScheduleMeetingComponent {
+  @Output()
+  meetingCreatedEvent: EventEmitter<MeetingItem> =new EventEmitter<MeetingItem>();
   public rooms: Array<string> = [
     "Auditorium","Public","Seminar","Enquiry","Presale","CustomSupport","Conference"
   ];
@@ -83,7 +85,7 @@ export class ScheduleMeetingComponent {
   }
   onSubmit(){
     this.form.markAllAsTouched();
-    let item = {
+    let item: MeetingItem = {
       ts: Date.now(),
       creator: this.auth.user(),
       guests: this.form.value.guests,
@@ -94,6 +96,6 @@ export class ScheduleMeetingComponent {
       room: this.form.value.room
     };
     console.log(this.form.value, item);
-
+    this.meetingCreatedEvent.emit(item);
   }
 }

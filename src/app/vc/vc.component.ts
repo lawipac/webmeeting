@@ -37,7 +37,7 @@ export class VcComponent {
 
   private startMeeting() {
     this.api = new JitsiMeetExternalAPI("8x8.vc", {
-      roomName: this.app.appID + "/" + this.app.room + "test1",
+      roomName: this.app.appID + "/" + this.app.room,
       // configOverwrite: {
       //   prejoinPageEnabled: false,
       //   toolbarButtons: ['hangup', 'microphone', 'recording', 'camera'],

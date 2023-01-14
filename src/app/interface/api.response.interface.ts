@@ -65,7 +65,6 @@ export interface MeetingItem{
   ts: number;
   creator: string;
   guests: string[];
-  guestNames: string[];
   status: number;
   public: number;
   end: number;

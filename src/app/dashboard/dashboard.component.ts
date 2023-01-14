@@ -8,4 +8,8 @@ import {MeetingItem} from "../interface/api.response.interface";
 })
 export class DashboardComponent {
   meetings: MeetingItem[] = [];
+
+  onCreate(item: MeetingItem) {
+    console.log("in parent",item);
+  }
 }
