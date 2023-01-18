@@ -89,7 +89,7 @@ export class AuthService {
     return true;
   }
   public fakeLogin(): boolean {
-    return this.fakeLoginGuest();
+    //return this.fakeLoginGuest();
     return this.fakeLoginAdmin();
   }
 

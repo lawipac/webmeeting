@@ -37,4 +37,9 @@ export class DashboardComponent {
   get isModerator(): boolean{
     return this.auth.isModerator();
   }
+  get noMeeting(): boolean{
+    if (this.meetingList != undefined && this.meetingList.meetings.length >0)
+      return false;
+    return true;
+  }
 }

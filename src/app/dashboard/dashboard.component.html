@@ -5,6 +5,5 @@
     </app-schedule-meeting>
   </div>
 </div>
-
-<app-empty></app-empty>
+<app-empty *ngIf="noMeeting"></app-empty>
 <app-meetinglist (zeroMeeting)="onZeroMeeting()"></app-meetinglist>
