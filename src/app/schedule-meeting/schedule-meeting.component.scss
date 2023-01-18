@@ -2,9 +2,31 @@ kendo-floatinglabel {
   width: 100%;
 }
 
+.expand{
+  position:absolute;
+  bottom:-10px;
+  border: 1px solid #b39f9f;
+  height: 20px;
+  width: 100px;
+  border-radius: 100px;
+  left: 45%;
+  background-color: #ffe5e5;
+}
+
+.content.folded{
+  max-height:2px;
+  padding:5px;
+  opacity: 1;
+  background-color: rgb(63,81,181);
+  transition: all 1s ease-out;
+}
+
 .content {
+  max-height:610px;
+  overflow: hidden;
+  transition:all .6s ease-in-out;
   padding:20px;
-  min-width: 500px;
+  position: relative;
   background-color:rgba(255,255,255,.8);
   border-radius:.25em;
   box-shadow:0 0 .25em rgba(0,0,0,.25);
@@ -17,8 +39,7 @@ kendo-floatinglabel {
   //transform:translate(-50%, -50%);
 
   kendo-formfield{
-    padding:10px 0 10px 0 ;
-    margin: 0 10px 0 10px;
+    margin: 0 0 0 10px;
     div.radioGroup{
       display: flex;
       padding-bottom: 10px;
@@ -68,6 +89,12 @@ kendo-floatinglabel {
       padding-right: 20px;
     }
   }
+
+  div.buttons{
+    text-align: center;
+    padding: 20px;
+  }
 }
+
 
 

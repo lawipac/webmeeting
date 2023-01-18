@@ -1,1 +1,9 @@
-<p>meetinglist works!</p>
+<div class="body">
+<div class="cards">
+  <div class="card"  *ngFor="let m of meetings" class="contanier">
+    <app-meeting-detail [meeting]="m"
+                        (delete)="onDeleteMeeting($event)"
+    >    </app-meeting-detail>
+  </div>
+</div>
+</div>

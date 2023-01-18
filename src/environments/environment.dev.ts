@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
   apiKey: 'biukop-is-helping-superforex',
-  apiBaseUrl: 'https://api.webtradepay.au/v1-dev',
+  apiBaseUrl: 'http://192.168.1.35:3000',
   wss: "wss://wss.webtradepay.au/meeting-dev"
 }; // this is the same as environment.dev.ts ---

@@ -55,7 +55,7 @@ export interface Rlogin{
 }
 
 export interface SQueryMeeting{
-  query:  string; //creator| future | guest
+  query:  string; //creator| future | guest | my
   creator: string;
   ts: number;
   guest:  string;
@@ -64,12 +64,17 @@ export interface SQueryMeeting{
 export interface MeetingItem{
   ts: number;
   creator: string;
-  guests: string[];
+  guests: {
+    email: string;
+    name: string;
+  }[];
   status: number;
   public: number;
   end: number;
   start: number;
   room: string;
+
+  description:string;
 }
 
 export interface SQueryRecording{
@@ -100,6 +105,12 @@ export interface Recording{
   idempotencyKey: string;
   customerId: string;
 }
-// export interface RQueryRecording{
-//
-// }
+
+export interface meetingKey{
+  room: string;
+  start: number;
+}
+export interface RDeleteMeeting{
+  status: boolean;
+  input: meetingKey[];
+}

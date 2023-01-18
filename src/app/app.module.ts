@@ -22,6 +22,8 @@ import { ListViewModule } from '@progress/kendo-angular-listview';
 import { ScheduleMeetingComponent } from './schedule-meeting/schedule-meeting.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MeetinglistComponent } from './meetinglist/meetinglist.component';
+import { MeetingDetailComponent } from './meeting-detail/meeting-detail.component';
 
 
 
@@ -37,7 +39,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     LoginComponent,
     VcComponent,
     ScheduleMeetingComponent,
-    DashboardComponent
+    DashboardComponent,
+    MeetinglistComponent,
+    MeetingDetailComponent
   ],
   imports: [
     BrowserModule,

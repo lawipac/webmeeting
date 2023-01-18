@@ -1,22 +1,32 @@
-
-<div class="content">
-  <form [formGroup]="form">
+<div class="content" [ngClass]="{'folded': folded}" >
+  <p class="host">Host: {{host}} <button href="#" (click)="logout()"><span class="k-icon k-i-logout"></span> logout </button> </p>
+  <form *ngIf="!folded" [formGroup]="form">
     <kendo-formfield>
       <kendo-floatinglabel text="Select a room">
-        <kendo-combobox formControlName="room" [data]="rooms" [allowCustom]="true" [valuePrimitive]="true" required>
+        <kendo-combobox formControlName="room" [data]="rooms"
+                        defaultItem="Auditorium"
+                        [allowCustom]="false" [valuePrimitive]="true" required>
         </kendo-combobox>
       </kendo-floatinglabel>
       <kendo-formerror>Error: room is required and should be short</kendo-formerror>
     </kendo-formfield>
 
+    <kendo-formfield>
+      <kendo-textarea
+        #description
+        formControlName="description"
+        placeholder="a short description of the meeting"
+      >
+      </kendo-textarea>
+    </kendo-formfield>
     <kendo-formfield  orientation="horizontal">
       <div class="radioGroup">
         <div class="radio">
-          <input type="radio" name="public"  value="100" kendoRadioButton formControlName="public" #public />
+          <input type="radio" name="public"  value="100" kendoRadioButton formControlName="public" #public  (change)="onRadioPublic($event)"/>
         <kendo-label [for]="public" text="Public Conference"></kendo-label>
         </div>
         <div class="radio">
-          <input type="radio"  name="public" value="0"kendoRadioButton formControlName="public" #private />
+          <input type="radio"  name="public" value="0"kendoRadioButton formControlName="public" #private (change)="onRadioPublic($event)" />
           <kendo-label [for]="private" text="Private Meeting"></kendo-label>
         </div>
       </div>
@@ -87,7 +97,10 @@
       </div>
     </div>
 
-    <button type="submit" kendoButton themeColor="primary" class="btn btn-success" (click)="onSubmit()">Create Meeting</button>
-    <button  kendoButton  class="btn btn-success" (click)="onCancel()">Cancel</button>
+    <div class="buttons">
+      <button type="submit" kendoButton themeColor="primary" class="btn btn-success" (click)="onSubmit()">Create Meeting</button>
+      <button  kendoButton  class="btn btn-success" (click)="onCancel()">Cancel</button>
+    </div>
   </form>
 </div>
+<span *ngIf="folded" class="expand k-icon k-i-arrow-seek-down" (click)="folded=false"></span>

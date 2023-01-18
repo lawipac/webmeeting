@@ -1,1 +1,39 @@
-<p>meeting-detail works!</p>
+
+<div class="container" [ngClass]="{'deleted': deleted, 'newlyCreated': newlyCreated}" >
+<div class="father" [ngClass]="{'flipped': flipped}">
+  <div class="front">
+    <header (mouseenter)="flipped=true;" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }" >{{meeting.room}}  </header>
+    <h3>{{meeting.start| date:"MMMM d, y z"}}</h3>
+    <p>Host: {{meeting.creator}}</p>
+    <p>{{meeting.start | date:"h:mm a "}} - {{meeting.end | date:"h:mm a "}}</p>
+    <p *ngFor="let g of meeting.guests">
+      <span>{{g.name}} </span>(<span>{{g.email}} </span>)
+    </p>
+    <p class="description">{{meeting.description | slice:0:250}}</p>
+    <div class="button-group" *ngIf="canEnter">
+      <button kendoButton [themeColor]="'warning'" (click)="onEnterMeting()">Enter Meeting</button>
+    </div>
+    <div class="button-group" *ngIf="!canEnter">
+      <p *ngIf="urgency >=0"> in {{ coming }}<br>
+        <span *ngIf="urgency > 0 ">allow to join 30 minutes before start;</span> </p>
+      <p *ngIf="urgency<0"> Meeting closed </p>
+    </div>
+  </div>
+  <div class="back">
+    <header (mouseenter)="flipped=false" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }">
+      <span class="k-icon k-i-change-manually k-i-change-manually k-color-dark k-icon-xl"></span> {{status}}
+    </header>
+    <p> Created on {{meeting.ts |  date:"MMMM d, y z"}} </p>
+    <p>creator: {{meeting.creator}}</p>
+    <p *ngFor="let g of meeting.guests">
+      <span>{{g.name}} </span>
+      <span>{{g.email}} </span>
+    </p>
+    <div class="button-group">
+<!--      <button (click)="onEditMeeting()" kendoButton>Edit</button>-->
+<!--      <button (click)="onCancelMeeting()" kendoButton>Cancel</button>-->
+      <button (click)="onDeleteMeeting()" kendoButton>delete</button>
+    </div>
+  </div>
+</div>
+</div>
