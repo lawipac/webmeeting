@@ -24,7 +24,7 @@ export class ScheduleMeetingComponent {
   public durationOptions = [
     {text: "30 minutes", value : 1800001},
     {text: "60 minutes", value: 3600002},
-    {text: "1.5 Hours", value : 4800003},
+    {text: "1.5 Hours", value : 5400003},
     {text: "2 Hours", value: 7200004},
     {text: "2.5 Hours", value: 9000005},
     {text: "3 Hours", value: 10800006},

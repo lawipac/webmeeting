@@ -47,6 +47,10 @@ export class AuthService {
     this.ts = v;
   }
 
+  public setUser(v: string){
+    this.email = v;
+  }
+
   public isAuth(): boolean{
     console.log("isAuth", this);
     return this.authToken != "";
@@ -85,14 +89,30 @@ export class AuthService {
     return true;
   }
   public fakeLogin(): boolean {
+    return this.fakeLoginGuest();
+    return this.fakeLoginAdmin();
+  }
+
+  public fakeLoginGuest(): boolean {
+    this.authToken = "ewogICJlbWFpbCI6ICJwYXRyaWNrQGJpdWtvcC5jb20uYXUiLAogICJvdHAiOiAiMzcwNSIKfQ==";
+    this.email= "patrick@biukop.com.au";
+    this.jwt = "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtMzU0MDgyMDNiZTE2NDZhYzgxMTU5NGZhNzlkZGI2Y2UvMTIyOTA5LVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE2NzM2NzQ0MzIsImV4cCI6MTY3MzY4MTYzMiwibmJmIjoxNjczNjc0NDI3LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtMzU0MDgyMDNiZTE2NDZhYzgxMTU5NGZhNzlkZGI2Y2UiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOmZhbHNlLCJzaXAtb3V0Ym91bmQtY2FsbCI6ZmFsc2UsInRyYW5zY3JpcHRpb24iOmZhbHNlLCJyZWNvcmRpbmciOnRydWV9LCJ1c2VyIjp7ImhpZGRlbi1mcm9tLXJlY29yZGVyIjpmYWxzZSwibW9kZXJhdG9yIjp0cnVlLCJuYW1lIjoiYXBpIiwiaWQiOiJhdXRoMHw2MzZjN2ViOTJjNzg2YjBkYjI4NzFmMTIiLCJhdmF0YXIiOiIiLCJlbWFpbCI6ImFwaUBzZm1hcmtldHMuY29tLmF1In19LCJyb29tIjoiKiJ9.jmDQY8SyfePYaIc0Y5rSJDAqY6pfQE1s-lQmzxPknBmaMfOcAWzToVoWTZerqPQO41oZ6yCZHqX70gUtjRmaJS67Q6oFUlv1iwFVB1T4J78TRBivymQlzkBuOtyh5mZuYhT9yaGFwyWFyoE66PgBuEs0uMb4KoiMQfIyPM4MwDk-ZD0Akaa1ZEdyvHJ40E-p5FVJDA4k1xgtDJzZbUuHwSjqtAW1Sp0782oV9daO1kmKHLDRQmsyjNSH2bmYNSd5R5XOoM-7FuvoHDKQmPIr6rMHq_OQinGJ6BafKoTlj6-H7RfS7pQeCjQnF_3NaiYTLZyaMLTT6WOGOwZCTvF4HQ";
+    this.moderator = false;
+    this.otp="3705";
+    this.ts=1674039346652;
+    this.ttl=17922;
+    console.log("fakelogin guest", this);
+    return true;
+  }
+
+  private fakeLoginAdmin(): boolean{
     this.authToken = "ewogICJlbWFpbCI6ICJhZG1pbkBiaXVrb3AuY29tLmF1IiwKICAib3RwIjogIjY3NjYiCn0=";
     this.email = "admin@biukop.com.au";
     this.otp = "6766";
-    this.jwt = "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtMzU0MDgyMDNiZTE2NDZhYzgxMTU5NGZhNzlkZGI2Y2UvMTIyOTA5LVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE2NzM2NzQ0MzIsImV4cCI6MTY3MzY4MTYzMiwibmJmIjoxNjczNjc0NDI3LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtMzU0MDgyMDNiZTE2NDZhYzgxMTU5NGZhNzlkZGI2Y2UiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOmZhbHNlLCJzaXAtb3V0Ym91bmQtY2FsbCI6ZmFsc2UsInRyYW5zY3JpcHRpb24iOmZhbHNlLCJyZWNvcmRpbmciOnRydWV9LCJ1c2VyIjp7ImhpZGRlbi1mcm9tLXJlY29yZGVyIjpmYWxzZSwibW9kZXJhdG9yIjp0cnVlLCJuYW1lIjoiYXBpIiwiaWQiOiJhdXRoMHw2MzZjN2ViOTJjNzg2YjBkYjI4NzFmMTIiLCJhdmF0YXIiOiIiLCJlbWFpbCI6ImFwaUBzZm1hcmtldHMuY29tLmF1In19LCJyb29tIjoiKiJ9.jmDQY8SyfePYaIc0Y5rSJDAqY6pfQE1s-lQmzxPknBmaMfOcAWzToVoWTZerqPQO41oZ6yCZHqX70gUtjRmaJS67Q6oFUlv1iwFVB1T4J78TRBivymQlzkBuOtyh5mZuYhT9yaGFwyWFyoE66PgBuEs0uMb4KoiMQfIyPM4MwDk-ZD0Akaa1ZEdyvHJ40E-p5FVJDA4k1xgtDJzZbUuHwSjqtAW1Sp0782oV9daO1kmKHLDRQmsyjNSH2bmYNSd5R5XOoM-7FuvoHDKQmPIr6rMHq_OQinGJ6BafKoTlj6-H7RfS7pQeCjQnF_3NaiYTLZyaMLTT6WOGOwZCTvF4HQ",
-      this.moderator = true;
+    this.jwt = "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtMzU0MDgyMDNiZTE2NDZhYzgxMTU5NGZhNzlkZGI2Y2UvMTIyOTA5LVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE2NzM2NzQ0MzIsImV4cCI6MTY3MzY4MTYzMiwibmJmIjoxNjczNjc0NDI3LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtMzU0MDgyMDNiZTE2NDZhYzgxMTU5NGZhNzlkZGI2Y2UiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOnRydWUsIm91dGJvdW5kLWNhbGwiOmZhbHNlLCJzaXAtb3V0Ym91bmQtY2FsbCI6ZmFsc2UsInRyYW5zY3JpcHRpb24iOmZhbHNlLCJyZWNvcmRpbmciOnRydWV9LCJ1c2VyIjp7ImhpZGRlbi1mcm9tLXJlY29yZGVyIjpmYWxzZSwibW9kZXJhdG9yIjp0cnVlLCJuYW1lIjoiYXBpIiwiaWQiOiJhdXRoMHw2MzZjN2ViOTJjNzg2YjBkYjI4NzFmMTIiLCJhdmF0YXIiOiIiLCJlbWFpbCI6ImFwaUBzZm1hcmtldHMuY29tLmF1In19LCJyb29tIjoiKiJ9.jmDQY8SyfePYaIc0Y5rSJDAqY6pfQE1s-lQmzxPknBmaMfOcAWzToVoWTZerqPQO41oZ6yCZHqX70gUtjRmaJS67Q6oFUlv1iwFVB1T4J78TRBivymQlzkBuOtyh5mZuYhT9yaGFwyWFyoE66PgBuEs0uMb4KoiMQfIyPM4MwDk-ZD0Akaa1ZEdyvHJ40E-p5FVJDA4k1xgtDJzZbUuHwSjqtAW1Sp0782oV9daO1kmKHLDRQmsyjNSH2bmYNSd5R5XOoM-7FuvoHDKQmPIr6rMHq_OQinGJ6BafKoTlj6-H7RfS7pQeCjQnF_3NaiYTLZyaMLTT6WOGOwZCTvF4HQ", this.moderator = true;
     this.ttl = 15233;
     this.ts = 1673761055491;
-    console.log("fakelogin", this);
+    console.log("fakelogin admin", this);
     return true;
   }
 }

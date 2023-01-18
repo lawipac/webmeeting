@@ -1,8 +1,10 @@
 <div style="position: relative; left:0; right:0; top:0; bottom:0; text-align: center; display:flex">
-  <div style="width:80%; margin:auto; top:100px;">
-    <app-schedule-meeting
-      (meetingCreatedEvent)="onCreate($event)" (abandonedEvent)="onCancel()"></app-schedule-meeting>
+  <div style="width:80%; max-width:500px; margin:auto; top:100px;">
+    <app-schedule-meeting *ngIf="isModerator"
+      (meetingCreatedEvent)="onCreate($event)" (abandonedEvent)="onCancel()">
+    </app-schedule-meeting>
   </div>
 </div>
 
+<app-empty></app-empty>
 <app-meetinglist (zeroMeeting)="onZeroMeeting()"></app-meetinglist>

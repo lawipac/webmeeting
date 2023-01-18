@@ -54,4 +54,20 @@ export class MeetinglistComponent {
       this.zeroMeeting.emit();
     }
   }
+
+  addOrUpdate(item: MeetingItem): string {
+    let found = false;
+    this.meetings.forEach( (e, idx, array) => {
+      if (e.room == item.room && e.start == item.start){
+        found = true;
+        array[idx] = item;
+      }
+    });
+
+    if (!found){
+      this.meetings.unshift(item);
+      return "add";//add
+    }
+    return "update";
+  }
 }

@@ -24,6 +24,8 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MeetinglistComponent } from './meetinglist/meetinglist.component';
 import { MeetingDetailComponent } from './meeting-detail/meeting-detail.component';
+import { TopbarComponent } from './topbar/topbar.component';
+import { EmptyComponent } from './empty/empty.component';
 
 
 
@@ -41,7 +43,9 @@ import { MeetingDetailComponent } from './meeting-detail/meeting-detail.componen
     ScheduleMeetingComponent,
     DashboardComponent,
     MeetinglistComponent,
-    MeetingDetailComponent
+    MeetingDetailComponent,
+    TopbarComponent,
+    EmptyComponent
   ],
   imports: [
     BrowserModule,

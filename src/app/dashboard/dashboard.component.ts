@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {MeetingItem} from "../interface/api.response.interface";
 import {ScheduleMeetingComponent} from "../schedule-meeting/schedule-meeting.component";
 import {MeetinglistComponent} from "../meetinglist/meetinglist.component";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -10,17 +11,19 @@ import {MeetinglistComponent} from "../meetinglist/meetinglist.component";
 })
 export class DashboardComponent {
   // @ts-ignore
-  @ViewChild(ScheduleMeetingComponent) scheduleMeeting: ScheduleMeetingComponent;
+  @ViewChild(ScheduleMeetingComponent, {static:false}) scheduleMeeting: ScheduleMeetingComponent;
   // @ts-ignore
   @ViewChild(MeetinglistComponent) meetingList: MeetinglistComponent;
 
+  constructor(private auth: AuthService){}
   ngAfterViewInit(): void{
-    if ( this.meetingList.meetings.length == 0 )
-      this.onZeroMeeting();
+    setTimeout( () =>{
+      if ( this.meetingList.meetings.length == 0 && this.auth.isModerator() )
+        this.onZeroMeeting();
+    }, 700);
   }
   onCreate(item: MeetingItem) {
-    console.log("in parent",item);
-    this.meetingList.meetings.unshift(item);
+    this.meetingList.addOrUpdate(item);
   }
 
   onCancel() {
@@ -29,5 +32,9 @@ export class DashboardComponent {
 
   onZeroMeeting() {
     this.scheduleMeeting.folded=false;
+  }
+
+  get isModerator(): boolean{
+    return this.auth.isModerator();
   }
 }

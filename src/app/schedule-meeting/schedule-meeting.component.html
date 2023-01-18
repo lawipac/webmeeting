@@ -1,6 +1,5 @@
-<div class="content" [ngClass]="{'folded': folded}" >
-  <p class="host">Host: {{host}} <button href="#" (click)="logout()"><span class="k-icon k-i-logout"></span> logout </button> </p>
-  <form *ngIf="!folded" [formGroup]="form">
+<div class="content" [ngClass]="{'folded': folded}" (mouseenter)="folded=false">
+  <form [formGroup]="form">
     <kendo-formfield>
       <kendo-floatinglabel text="Select a room">
         <kendo-combobox formControlName="room" [data]="rooms"
@@ -103,4 +102,4 @@
     </div>
   </form>
 </div>
-<span *ngIf="folded" class="expand k-icon k-i-arrow-seek-down" (click)="folded=false"></span>
+
