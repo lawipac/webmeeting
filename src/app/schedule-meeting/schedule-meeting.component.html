@@ -12,11 +12,13 @@
 
     <kendo-formfield>
       <kendo-textarea
+        [rows]="5"
         #description
         formControlName="description"
         placeholder="a short description of the meeting"
       >
       </kendo-textarea>
+      <kendo-formerror>Error: <200 chars</kendo-formerror>
     </kendo-formfield>
     <kendo-formfield  orientation="horizontal">
       <div class="radioGroup">

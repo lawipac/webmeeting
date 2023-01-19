@@ -14,6 +14,8 @@ export interface ROtp {
 export interface SJwt{
   email: string;
   room: string;
+
+  start: number;
   nick: string;
 }
 export interface RJwt{
@@ -52,6 +54,8 @@ export interface Rlogin{
   ttl: number;
   otp: string;
   auth: string;//token
+
+  isModerator: boolean
 }
 
 export interface SQueryMeeting{

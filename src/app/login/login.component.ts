@@ -82,6 +82,7 @@ export class LoginComponent {
             this.auth.setToken(data.auth);
             this.auth.setTTL(data.ttl);
             this.auth.setUser(email);
+            this.auth.setModerator(data.isModerator);
             let _ = this.router.navigate(['/dash']);
           }else{
             this.dialogMessage="Magic link expired, please get another code";

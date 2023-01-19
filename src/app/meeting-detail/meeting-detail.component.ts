@@ -1,5 +1,9 @@
 import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {MeetingItem} from "../interface/api.response.interface";
+import {AppService} from "../services/app.service";
+import {Router} from "@angular/router";
+import {HttpsService} from "../services/https.service";
+import {AuthService} from "../services/auth.service";
 
 @Component({
   selector: 'app-meeting-detail',
@@ -20,10 +24,16 @@ export class MeetingDetailComponent {
   deleted = false;
   newlyCreated= false;
   urgency: number = 0;
+
   onEnterMeting() {
-    console.log("enter meeting");
+    this.app.setCurrentMeetingRoom (this.meeting);
+    this.https.renewJwt().subscribe( data =>{
+        this.auth.setJwt (data.jwt);
+        let _ = this.router.navigate(['vc']);
+    });
   }
 
+  constructor(private app: AppService, private router: Router, private https: HttpsService, private auth: AuthService) { }
   ngOnChanges(changes: SimpleChanges) {
     let m = changes['meeting'].currentValue;
     this.calculateWhen2Start(m);
@@ -46,12 +56,7 @@ export class MeetingDetailComponent {
     this.delete.emit(this);
     console.log("delete meeting");
   }
-  onCancelMeeting() {
-    console.log("cancel meeting");
-  }
-  onEditMeeting() {
-    console.log("edit meeting");
-  }
+
   get status() : string{
     const status = ["New", "On Going", "Finished", "Abandoned", "Cancelled"];
     let ret =  status[this.meeting.status ?? 4];

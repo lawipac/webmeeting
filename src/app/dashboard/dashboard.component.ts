@@ -20,7 +20,7 @@ export class DashboardComponent {
     setTimeout( () =>{
       if ( this.meetingList.meetings.length == 0 && this.auth.isModerator() )
         this.onZeroMeeting();
-    }, 700);
+    }, 1000);
   }
   onCreate(item: MeetingItem) {
     this.meetingList.addOrUpdate(item);

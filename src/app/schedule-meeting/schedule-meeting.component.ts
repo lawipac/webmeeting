@@ -40,7 +40,7 @@ export class ScheduleMeetingComponent {
       guests:this.fb.array([ ]),
       creator: '',
       public: '100',
-      description: ''
+      description: ['',Validators.maxLength(200)],
     });
     this.host = this.auth.user();
   }

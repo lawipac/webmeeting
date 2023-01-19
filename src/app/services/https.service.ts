@@ -5,26 +5,27 @@ import { catchError, retry } from 'rxjs/operators';
 import {
   MeetingItem,
   meetingKey,
-  RDeleteMeeting,
+  RDeleteMeeting, RJwt,
   Rlogin,
-  ROtp,
+  ROtp, SJwt,
   SLogin,
   SQueryMeeting
 } from "../interface/api.response.interface";
 import {AppService} from "./app.service";
 import {environment} from "../../environments/environment";
+import {AuthService} from "./auth.service";
 
 @Injectable({ providedIn: 'root'})
 export class HttpsService {
-  constructor(private http: HttpClient, private as: AppService) { }
+  constructor(private http: HttpClient, private app: AppService, private auth: AuthService) { }
 
    url = new Map<string,string>([
-    ["otp", this.as.env.apiBaseUrl + "/otp"],
-    ["login", this.as.env.apiBaseUrl + "/login"],
-    ["schedule-meeting", this.as.env.apiBaseUrl + "/schedule-meeting"],
-    ["jwt", this.as.env.apiBaseUrl + "/jwt"],
-    ["meeting", this.as.env.apiBaseUrl + "/query/meetings"],
-    ["recording", this.as.env.apiBaseUrl + "/query/recordings"],
+    ["otp", this.app.env.apiBaseUrl + "/otp"],
+    ["login", this.app.env.apiBaseUrl + "/login"],
+    ["schedule-meeting", this.app.env.apiBaseUrl + "/schedule-meeting"],
+    ["jwt", this.app.env.apiBaseUrl + "/jwt"],
+    ["meeting", this.app.env.apiBaseUrl + "/query/meetings"],
+    ["recording", this.app.env.apiBaseUrl + "/query/recordings"],
   ]);
 
   httpOptions = {
@@ -68,5 +69,15 @@ export class HttpsService {
 
   public deleteMeeting(input: meetingKey): Observable<RDeleteMeeting> {
     return this.http.delete<RDeleteMeeting>(this.urlFor('meeting'), {body: [input]});
+  }
+
+  public renewJwt() : Observable<RJwt>{
+    let input: SJwt ={
+      email: this.auth.user(),
+      room: this.app.currentMeetingRoom,
+      start: this.app.currentMeetingStart,
+      nick: this.auth.user()
+    }
+    return this.http.post<RJwt>(this.urlFor('jwt'), input);
   }
 }

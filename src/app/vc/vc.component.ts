@@ -1,11 +1,11 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
 import { Location } from '@angular/common'
-import {ActivatedRoute, Router} from "@angular/router";
 import {AppService} from "../services/app.service";
 import {WebsocketService} from "../services/websocket.service";
 import {AuthService} from "../services/auth.service";
-import {HttpsService} from "../services/https.service";
+import {Component} from "@angular/core";
+import {Router} from "@angular/router";
 declare var JitsiMeetExternalAPI: any;
+
 @Component({
   selector: 'app-vc',
   templateUrl: './vc.component.html',
@@ -32,16 +32,16 @@ export class VcComponent {
   }
 
   readyToMeeting(): boolean{
-    return this.auth.validJWT(this.app.room);
+    return this.auth.validJWT(this.app.jaasMeetingRoom);
   }
 
   getUIConfig(){
     let moderatorConfig = {
-      prejoinPageEnabled: false,
+      prejoinConfig: {enabled: false},
       toolbarButtons: ['hangup', 'microphone', 'recording', 'camera'],
     };
     let guestConfig = {
-      prejoinPageEnabled: false,
+      prejoinConfig: {enabled: false},
       toolbarButtons: ['hangup', 'microphone',  'camera'],
     }
     if (this.auth.isModerator()){
@@ -51,9 +51,9 @@ export class VcComponent {
     }
   }
   private startMeeting() {
-
+    console.log(this.auth, this.app.jaasMeetingRoom);
     this.api = new JitsiMeetExternalAPI("8x8.vc", {
-      roomName: this.app.appID + "/" + this.app.room,
+      roomName: this.app.appID + "/" + this.app.jaasMeetingRoom,
       configOverwrite: this.getUIConfig(),
       parentNode: document.querySelector('#jaas_container'),
       jwt:this.auth.getJwt(),
@@ -95,7 +95,8 @@ export class VcComponent {
 
   handleVideoConferenceLeft = () => {
     console.log("handleVideoConferenceLeft");
-    this.router.navigate(['/test/dash']);
+    //delete this.api;
+    //this.router.navigate(['dash']);
   }
 
   handleMuteStatus = (audio:any) => {
