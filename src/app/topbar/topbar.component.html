@@ -1,0 +1,18 @@
+<div class="container" *ngIf="loggedIn" [ngClass]="{'moderator': isModerator, 'guest': !isModerator}">
+  <div *ngIf="isModerator" class="moderator">
+    <span>Host</span>
+    <span class="k-icon k-i-user "></span>
+    <span>{{nickName}}</span>
+    <button class="logout" endoButton  (click)="logout()">
+      <span class="k-icon k-i-logout">  </span> logout
+    </button>
+  </div>
+  <div  *ngIf="!isModerator" class="guest">
+    <span>Visitor</span>
+    <span class="k-icon k-i-user"></span>
+    <span>{{nickName}}</span>
+    <button class="logout" endoButton  (click)="logout()">
+      <span class="k-icon k-i-logout">  </span> logout
+    </button>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="content" [ngClass]="{'folded': folded}" (mouseenter)="folded=false">
+  <form [formGroup]="form">
+    <kendo-formfield>
+      <kendo-floatinglabel text="Select a room">
+        <kendo-combobox formControlName="room" [data]="rooms"
+                        defaultItem="Auditorium"
+                        [allowCustom]="false" [valuePrimitive]="true" required>
+        </kendo-combobox>
+      </kendo-floatinglabel>
+      <kendo-formerror>Error: room is required and should be short</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-textarea
+        #description
+        formControlName="description"
+        placeholder="a short description of the meeting"
+      >
+      </kendo-textarea>
+    </kendo-formfield>
+    <kendo-formfield  orientation="horizontal">
+      <div class="radioGroup">
+        <div class="radio">
+          <input type="radio" name="public"  value="100" kendoRadioButton formControlName="public" #public  (change)="onRadioPublic($event)"/>
+        <kendo-label [for]="public" text="Public Conference"></kendo-label>
+        </div>
+        <div class="radio">
+          <input type="radio"  name="public" value="0"kendoRadioButton formControlName="public" #private (change)="onRadioPublic($event)" />
+          <kendo-label [for]="private" text="Private Meeting"></kendo-label>
+        </div>
+      </div>
+    </kendo-formfield>
+    <kendo-formfield orientation="horizontal">
+
+      <div class="row">
+        <div class="control">
+        <kendo-datetimepicker [format]="'MM/dd/yyyy HH:mm'" formControlName="startDate" #startDate> </kendo-datetimepicker>
+        </div>
+        <div class="label">
+          <kendo-label [for]="startDate" text="(Start time)"></kendo-label>
+        </div>
+
+      </div>
+    </kendo-formfield>
+
+    <kendo-formfield orientation="horizontal">
+      <div class="row">
+      <div class="control">
+        <kendo-dropdownlist [data]="durationOptions"   formControlName="duration"
+                            [defaultItem]="durationOptions[1]"
+                            [valuePrimitive]="true"
+                            textField="text"
+                            valueField="value" #duration>
+        </kendo-dropdownlist>
+      </div>
+      <div class="label">
+        <kendo-label [for]="startDate" text="(Durations)" [for]="duration"></kendo-label>
+      </div>
+      </div>
+    </kendo-formfield>
+
+    <div class="guests" *ngIf="form.value.public == '0' ">
+
+        <kendo-label text="{{strGuests}}">
+          <kendo-slider
+            incrementTitle="Inc"
+            decrementTitle="Dec"
+            [min]="1"
+            [max]="5"
+            [smallStep]="1"
+            formControlName="numOfGuests"
+            (valueChange)="onChangeNumOfGuests()"
+            #slider
+          ></kendo-slider>
+        </kendo-label>
+
+      <div formArrayName="guests" class="formArray">
+        <div class="row" *ngFor="let quantity of guests().controls; let i=index" [formGroupName]="i">
+          <div class="email">
+            <kendo-formfield class="inline">
+              <kendo-floatinglabel text="Email">
+                <input type="text" kendoTextBox formControlName="email" class="form-control">
+              </kendo-floatinglabel>
+              <kendo-formerror>A valid email is required</kendo-formerror>
+            </kendo-formfield>
+          </div>
+          <div class="nick">
+            <kendo-floatinglabel text="Name(Optional)">
+            <input type="text" kendoTextBox formControlName="name" class="form-control">
+            </kendo-floatinglabel>
+          </div>
+          <div class="remove">
+            <span class="k-icon k-i-x-circle k-icon-xl" (click)="removeGuest(i)"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons">
+      <button type="submit" kendoButton themeColor="primary" class="btn btn-success" (click)="onSubmit()">Create Meeting</button>
+      <button  kendoButton  class="btn btn-success" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>
+
