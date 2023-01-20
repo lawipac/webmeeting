@@ -9,6 +9,7 @@ import {VcComponent} from "./vc/vc.component";
 import {ScheduleMeetingComponent} from "./schedule-meeting/schedule-meeting.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {environment} from "../environments/environment";
+import {EmptyComponent} from "./empty/empty.component";
 
 
 
@@ -23,6 +24,7 @@ const routes: Routes = [
 
 if (environment.production == false){
   routes.push(...[
+    { path: 'test/empty',  component: EmptyComponent },
     { path: 'test/sm', canActivate:[DebugLogin], component: ScheduleMeetingComponent },
     { path: 'test/vc', canActivate:[DebugLogin], component: VcComponent },
     { path: 'test/dash', canActivate:[DebugLogin], component: DashboardComponent },

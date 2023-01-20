@@ -5,8 +5,8 @@
     "ng": "ng",
     "start": "ng serve --configuration=development --host 0.0.0.0 --disable-host-check",
     "build": "ng build --configuration=production",
-    "publish-dev": "ng build --configuration=production && cd ./serverless/  && sls client deploy && cd ../",
-    "publish-prod": "ng build --configuration=production && cd ./serverless/  && sls client deploy --stage prod && cd ../",
+    "publish-dev": "ng build --configuration=production && cd ./serverless/  && sls client deploy --no-confirm && cd ../",
+    "publish-prod": "ng build --configuration=production && cd ./serverless/  && sls client deploy --stage prod --no-confirm && cd ../",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

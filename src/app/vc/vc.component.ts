@@ -64,10 +64,10 @@ export class VcComponent {
 
     this.api.addEventListeners({
       readyToClose: this.handleClose,
-      participantLeft: this.handleParticipantLeft,
-      participantJoined: this.handleParticipantJoined,
-      videoConferenceJoined: this.handleVideoConferenceJoined,
-      videoConferenceLeft: this.handleVideoConferenceLeft,
+      participantLeft: this.handleParticipantLeft.bind(this),
+      participantJoined: this.handleParticipantJoined.bind(this),
+      videoConferenceJoined: this.handleVideoConferenceJoined.bind(this),
+      videoConferenceLeft: this.handleVideoConferenceLeft.bind(this),
       audioMuteStatusChanged: this.handleMuteStatus,
       videoMuteStatusChanged: this.handleVideoStatus
     });
@@ -79,12 +79,12 @@ export class VcComponent {
   }
 
   handleParticipantLeft = async (participant: any) => {
-    console.log("handleParticipantLeft", participant); // { id: "2baa184e" }
+    console.log("handleParticipantLeft", this, participant); // { id: "2baa184e" }
     const data = await this.getParticipants();
   }
 
   handleParticipantJoined = async (participant: any) => {
-    console.log("handleParticipantJoined", participant); // { id: "2baa184e", displayName: "Shanu Verma", formattedDisplayName: "Shanu Verma" }
+    console.log("handleParticipantJoined", this, participant); // { id: "2baa184e", displayName: "Shanu Verma", formattedDisplayName: "Shanu Verma" }
     const data = await this.getParticipants();
   }
 
@@ -96,7 +96,7 @@ export class VcComponent {
   handleVideoConferenceLeft = () => {
     console.log("handleVideoConferenceLeft");
     //delete this.api;
-    //this.router.navigate(['dash']);
+    this.router.navigate(['dash']);
   }
 
   handleMuteStatus = (audio:any) => {

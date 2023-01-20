@@ -69,8 +69,39 @@ div.tv {
 
 
 div.tv h1{
-  margin-top:50%;
   font-size: 6rem;
-  font-weight: 90;
   font-style: normal;
+}
+
+
+
+//animation for no-meeting text
+$width: 400px;
+$height: 300px;
+
+.bouncy, bouncy-wrap{
+  width: $width;
+  height: $height;
+}
+.bouncy{
+  margin:0px;
+}
+
+.x {
+
+  animation: x 5s linear infinite alternate;
+}
+.y {
+  animation: y 2s linear infinite alternate;
+}
+
+@keyframes x {
+  100% {
+    transform: translateX(calc(100vw - #{$width}));
+  }
+}
+@keyframes y {
+  100% {
+    transform: translateY(calc(100vh - #{$height}));
+  }
 }

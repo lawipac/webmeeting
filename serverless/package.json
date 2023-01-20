@@ -1,5 +1,5 @@
 {
-  "dependencies": {
+  "devDependencies": {
     "serverless-finch": "^4.0.0"
   }
 }
