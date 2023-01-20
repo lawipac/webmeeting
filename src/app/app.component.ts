@@ -1,11 +1,9 @@
 import {ChangeDetectorRef, Component, HostListener} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AppService} from "./services/app.service";
 import {WebsocketService} from "./services/websocket.service";
 import {HttpsService} from "./services/https.service";
-import {ROtp} from "./interface/api.response.interface";
-import {Md5} from 'ts-md5';
 import {Router} from "@angular/router";
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
 
-  title = 'Online Meeting';
+  title = 'Online Meeting - ' + environment.version;
 
 
   constructor(private app: AppService,
