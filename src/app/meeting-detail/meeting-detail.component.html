@@ -2,7 +2,7 @@
 <div class="container" [ngClass]="{'deleted': deleted, 'newlyCreated': newlyCreated}" >
 <div class="father" [ngClass]="{'flipped': flipped}">
   <div class="front">
-    <header (click)="flipped=true;" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }" >{{meeting.room}}  </header>
+    <header (click)="frontClicked()" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }" >{{meeting.room}}  </header>
     <h3>{{meeting.start| date:"MMMM d, y z"}}</h3>
     <p>Host: {{meeting.creator}}</p>
     <p>{{meeting.start | date:"h:mm a "}} - {{meeting.end | date:"h:mm a "}}</p>
@@ -20,7 +20,7 @@
     </div>
   </div>
   <div class="back">
-    <header (click)="flipped=false" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }">
+    <header (click)="backClicked()" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }">
       <span class="k-icon k-i-change-manually k-i-change-manually k-color-dark k-icon-xl"></span> {{status}}
     </header>
     <p> Created on {{meeting.ts |  date:"MMMM d, y z"}} </p>

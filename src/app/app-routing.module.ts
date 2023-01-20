@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'login/:token', component: LoginComponent },
 
-  //{ path: '**', redirectTo: 'test/vc'},
+  { path: '',  component: LoginComponent },
 ];
 
 if (environment.production == false){
@@ -28,6 +28,10 @@ if (environment.production == false){
     { path: 'test/sm', canActivate:[DebugLogin], component: ScheduleMeetingComponent },
     { path: 'test/vc', canActivate:[DebugLogin], component: VcComponent },
     { path: 'test/dash', canActivate:[DebugLogin], component: DashboardComponent },
+  ]);
+}else{
+  routes.push(...[
+    { path: '**',  component: EmptyComponent},
   ]);
 }
 

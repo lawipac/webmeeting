@@ -111,4 +111,12 @@ export class MeetingDetailComponent {
     return dDisplay + hDisplay + mDisplay + sDisplay;
   }
 
+  frontClicked() {
+    if ( this.auth.isModerator())
+      this.flipped=true;
+  }
+
+  backClicked() {
+    this.flipped=false;
+  }
 }

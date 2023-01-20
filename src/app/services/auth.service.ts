@@ -84,7 +84,9 @@ export class AuthService {
 
   public logout(){
     this.clearLogin();
-    let _ = this.router.navigate(['login']);
+    let _ = this.router.navigate(['login']).then(
+      () => { location.reload(); }
+    );
   }
   public clearLogin(): boolean {
     this.authToken = "";

@@ -21,7 +21,7 @@ export class LoginComponent {
 
   magicTokenLogin = false;
   public registerForm: FormGroup = new FormGroup({
-    nickName: new FormControl(),
+    nick: new FormControl(),
     otp: new FormControl(),
     email: new FormControl("", Validators.email),
   });
@@ -58,10 +58,13 @@ export class LoginComponent {
   }
 
   onOtpClick( ) {
-    this.https.sendOTP(this.registerForm.value.email).subscribe(
+    let email = this.registerForm.value.email;
+    this.https.sendOTP(email).subscribe(
       (data: ROtp) =>{
         console.log(data);
         this.otpResponse = {...data};
+        const nick = email.split('@');
+        this.registerForm.get('nick')?.setValue(nick[0]);
         this.cdRef.detectChanges();
       });
   }

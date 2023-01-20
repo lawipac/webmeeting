@@ -84,15 +84,15 @@ $height: 300px;
   height: $height;
 }
 .bouncy{
-  margin:0px;
+  margin:0;
 }
 
 .x {
 
-  animation: x 5s linear infinite alternate;
+  animation: x 13s linear infinite alternate;
 }
 .y {
-  animation: y 2s linear infinite alternate;
+  animation: y 7s linear infinite alternate;
 }
 
 @keyframes x {
