@@ -48,7 +48,7 @@ export class LoginComponent {
     if (token != ""){
       let j = Buffer.from(token, "base64").toString();
       let { email, otp} =JSON.parse(Buffer.from(token, "base64").toString());
-      this.registerForm.setValue({"email": email, "otp": otp, "nickName": email});
+      this.registerForm.setValue({"email": email, "otp": otp, "nick": email});
       this.magicTokenLogin = true;
 
       //simulate click login button
