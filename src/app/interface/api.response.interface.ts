@@ -126,3 +126,8 @@ export interface appLocal {
   ts: number;
   totalVisit: number
 }
+
+export interface Guest{
+  name: string;
+  email: string;
+}

@@ -120,7 +120,7 @@ export class ScheduleMeetingComponent {
     // setInterval(()=>{
     //   this.folded = ! this.folded;
     // }, 2000);
-    //this.abandonedEvent.emit();
+    this.abandonedEvent.emit();
   }
 
   onRadioPublic(e: any) {

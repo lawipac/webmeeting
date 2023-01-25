@@ -5,6 +5,7 @@ import {WsMessage, WebsocketService, MChat} from "./websocket.service";
 import {appLocal, MeetingItem} from "../interface/api.response.interface";
 import {AuthService} from "./auth.service";
 import { v4 as uuid } from 'uuid';
+import {Subscription} from "rxjs";
 
 @Injectable({ providedIn: 'root'})
 export class AppService {
@@ -16,23 +17,22 @@ export class AppService {
 
   constructor(private ws: WebsocketService) {
     this.loadAppLocal();
+    // setInterval(()=>{
+    //   console.log(this.ws.getState());
+    // }, 1000);
   }
 
   public announce(c: Partial<MChat>){
     c.from = this.al;
     c.to = "all";
-    let m: WsMessage = {
-      action : "onMessage",
-      data: c as MChat
-    }
-    this.ws.send(m);
+    this.ws.send(c as MChat);
   }
 
   public announceInvisible(){
-    this.announce({ "to":"all", event: 'invisible'});
+    this.announce({ "to":"all", event: 'APP_INVISIBLE'});
   }
   public announceVisible(){
-    this.announce({  "to":"all", event: 'visible'});
+    this.announce({  "to":"all", event: 'APP_VISIBLE'});
   }
 
   public checkHiddenDocument() {
@@ -103,5 +103,14 @@ export class AppService {
   }
   getAppLocal(): appLocal {
     return this.al;
+  }
+
+  public fromMyself(from: appLocal): boolean{
+    if (from.uuid == this.al.uuid) return true;
+    return false;
+  }
+
+  public subscribe(fn: (msg: MChat) => void, src: string="anonymous"): Subscription {
+    return this.ws.subscribe(fn,src);
   }
 }

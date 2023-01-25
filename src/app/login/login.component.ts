@@ -4,7 +4,7 @@ import {Buffer} from 'buffer';
 import {ROtp} from "../interface/api.response.interface";
 import {Md5} from "ts-md5";
 import {AppService} from "../services/app.service";
-import {WebsocketService, WsMessage} from "../services/websocket.service";
+import {MChat, WebsocketService, WsMessage} from "../services/websocket.service";
 import {HttpsService} from "../services/https.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
@@ -36,15 +36,6 @@ export class LoginComponent {
   }
 
 
-  onWsEvent(msg: WsMessage): void{
-    console.log(" app component received ws message", msg);
-  }
-
-  wsSub: Subscription = {} as Subscription;
-  ngOnDestroy(){
-    console.log("ws unsubscribed by" + this.constructor.name);
-    this.wsSub.unsubscribe();
-  }
 
   ngOnInit(){
     this.route.params.subscribe( params => {
@@ -53,7 +44,6 @@ export class LoginComponent {
       if (s!= undefined && s != '')
         this.doMagicTokenLogin(s);
     } );
-    this.wsSub = this.ws.subscribe(this.onWsEvent, this.constructor.name);
   }
 
 
@@ -151,7 +141,7 @@ export class LoginComponent {
   public close(status: string): void {
     this.opened = false;
     if (this.magicTokenLogin) {
-      this.router.navigate(['/login']);
+      let _ = this.router.navigate(['/login']);
     }
   }
 

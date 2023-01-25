@@ -17,15 +17,8 @@ export class DashboardComponent {
   // @ts-ignore
   @ViewChild(MeetinglistComponent) meetingList: MeetinglistComponent;
 
-  wsSub: Subscription = {} as Subscription;
-  ngOnDestroy(){
-    console.log("ws unsubscribed by" + this.constructor.name);
-    this.wsSub.unsubscribe();
-  }
 
-  ngOnInit() {
-    this.wsSub = this.ws.subscribe(this.onWsEvent, this.constructor.name);
-  }
+
 
   constructor(private auth: AuthService, private ws: WebsocketService){}
   ngAfterViewInit(): void{
@@ -40,11 +33,13 @@ export class DashboardComponent {
   }
 
   onCancel() {
-    this.scheduleMeeting.folded=true;
+    console.log(this.scheduleMeeting, typeof this.scheduleMeeting);
   }
 
   onZeroMeeting() {
-    this.scheduleMeeting.folded=false;
+    if ( this.scheduleMeeting instanceof ScheduleMeetingComponent){
+      this.scheduleMeeting.folded = false;
+    }
   }
 
   get isModerator(): boolean{
@@ -56,9 +51,4 @@ export class DashboardComponent {
     return true;
   }
 
-  onWsEvent(msg: WsMessage): void{
-    if (msg.data.event == "MEETING_CREATED"){
-      console.log("payload", msg.data.payload);
-    }
-  }
 }

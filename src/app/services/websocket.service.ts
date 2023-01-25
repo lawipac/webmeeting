@@ -25,8 +25,8 @@ export class WebsocketService {
   //@ts-ignore
   private subject: AnonymousSubject<MessageEvent> ;
   // @ts-ignore
-  private messages: Subject<WsMessage> = {} as Subject<WsMessage> ;
-  private sendQueue: WsMessage[] =[];
+  private messages: Subject<MChat> = {} as Subject<MChat> ;
+  private sendQueue: MChat[] =[];
   //@ts-ignore
   private ws : WebSocket;
 
@@ -38,6 +38,12 @@ export class WebsocketService {
     console.log("destroyed");
   }
   public connect(url: string): AnonymousSubject<MessageEvent> {
+    if (this.ws== undefined)
+      console.log("in ws undefined");
+    else{
+      console.log("ws ready-state:", this.ws.readyState);
+    }
+
     this.close();
     //perform connection or re-connection
     this.subject = this.create(url);
@@ -52,9 +58,10 @@ export class WebsocketService {
   }
 
   public reconnect() {
-    this.messages = <Subject<WsMessage>>this.connect(environment.wss).pipe(
+
+    this.messages = <Subject<MChat>>this.connect(environment.wss).pipe(
       map(
-        (response: MessageEvent): WsMessage => {
+        (response: MessageEvent): MChat => {
           console.log("incoming ",response.data);
           let data = JSON.parse(response.data)
           return data;
@@ -68,7 +75,6 @@ export class WebsocketService {
       ws.onmessage = obs.next.bind(obs);
       ws.onerror = obs.error.bind(obs);
       ws.onclose = obs.complete.bind(obs);
-      return ws.close.bind(ws);
     });
     ws.onopen = this.onOpen.bind(this);
     this.ws = ws;
@@ -78,7 +84,10 @@ export class WebsocketService {
       next: (data: Object) => {
         console.log('Message sent to websocket: ', data);
         if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify(data));
+          ws.send(JSON.stringify({
+            action: "onMessage",
+            data: data
+          }));
         }
       }
     };
@@ -87,6 +96,7 @@ export class WebsocketService {
   }
 
   public onOpen(): void{
+    console.log("ws opened", this.ws.readyState);
     while(this.sendQueue.length > 0){
       let m = this.sendQueue.pop();
       if (m != undefined) {
@@ -95,9 +105,9 @@ export class WebsocketService {
     }
   }
 
-  public send( m: WsMessage) : void{
-    if (this.ws.readyState != 1){ //not opened
-      console.log("queued");
+  public send( m: MChat) : void{
+    if (this.ws.readyState != WebSocket.OPEN){ //not opened
+      console.log("queued", this.ws.readyState);
       this.sendQueue.push(m);
     } else{
       console.log("direct send");
@@ -105,8 +115,12 @@ export class WebsocketService {
     }
   }
 
-  public subscribe(fn: (msg: WsMessage) => void, src: string="anonymous"): Subscription {
+  public subscribe(fn: (msg: MChat) => void, src: string="anonymous"): Subscription {
     console.log(" ws subscribed by", src);
     return this.messages.subscribe(fn);
+  }
+
+  public getState(): number{
+    return this.ws.readyState;
   }
 }

@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, HostListener} from '@angular/core';
 import {AppService} from "./services/app.service";
-import {WebsocketService, WsMessage} from "./services/websocket.service";
+import {MChat, WebsocketService, WsMessage} from "./services/websocket.service";
 import {HttpsService} from "./services/https.service";
 import {Router} from "@angular/router";
 import {environment} from "../environments/environment";
@@ -42,7 +42,7 @@ export class AppComponent {
     this.app.checkHiddenDocument();
   }
 
-  onWsEvent(msg: WsMessage): void{
+  onWsEvent(msg: MChat): void{
     if ( environment.production==false)
       console.log(" app component received ws message", msg);
   }
