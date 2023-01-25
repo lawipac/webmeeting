@@ -43,8 +43,10 @@ export class AppComponent {
   }
 
   onWsEvent(msg: WsMessage): void{
-    console.log(" app component received ws message", msg);
+    if ( environment.production==false)
+      console.log(" app component received ws message", msg);
   }
+
 
 
 }

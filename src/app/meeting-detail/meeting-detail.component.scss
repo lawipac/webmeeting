@@ -43,6 +43,7 @@ div.container {
   color:#fff;
 }
 
+
 .father .front header {
   border-radius:11px 11px 0px 0px;
   height:110px;
@@ -89,7 +90,7 @@ div.container {
 .father .back {
   background-color:#FAFAFA;
   transform: rotateY(180deg);
-  z-index:1;
+  z-index:10;
   backface-visibility: hidden;
   border-radius:11px;
   color:#fff;

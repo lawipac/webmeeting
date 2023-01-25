@@ -42,7 +42,7 @@ export class LoginComponent {
 
   wsSub: Subscription = {} as Subscription;
   ngOnDestroy(){
-    console.log("ws unscribed");
+    console.log("ws unsubscribed by" + this.constructor.name);
     this.wsSub.unsubscribe();
   }
 

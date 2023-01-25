@@ -4,6 +4,7 @@ import {AuthService} from "../services/auth.service";
 import {HttpClient} from "@angular/common/http";
 import {HttpsService} from "../services/https.service";
 import {MeetingDetailComponent} from "../meeting-detail/meeting-detail.component";
+import {AppService} from "../services/app.service";
 
 @Component({
   selector: 'app-meetinglist',
@@ -19,7 +20,7 @@ export class MeetinglistComponent {
 
   // @ts-ignore
   @ViewChildren('app-meeting-detail') cards: QueryList<ElementRef>
-  constructor(private auth: AuthService, private https: HttpsService){}
+  constructor(private auth: AuthService, private https: HttpsService, private app: AppService){}
 
   ngAfterViewInit(){
     this.https.getMyMeetings(this.auth.user()).subscribe(
@@ -66,8 +67,12 @@ export class MeetinglistComponent {
 
     if (!found){
       this.meetings.unshift(item);
+      this.app.announce({"event": "MEETING_CREATED",payload: item});
       return "add";//add
+    }else{
+      this.app.announce({"event": "MEETING_UPDATE", payload: item})
+      return "update";
     }
-    return "update";
+
   }
 }

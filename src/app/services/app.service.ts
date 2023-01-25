@@ -20,6 +20,7 @@ export class AppService {
 
   public announce(c: Partial<MChat>){
     c.from = this.al;
+    c.to = "all";
     let m: WsMessage = {
       action : "onMessage",
       data: c as MChat

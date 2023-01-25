@@ -12,7 +12,7 @@ export interface MChat {
   from: appLocal;
   to:   string;
   event: string;
-
+  payload: any;
 }
 
 export interface WsMessage {

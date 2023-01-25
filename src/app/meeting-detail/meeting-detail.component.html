@@ -1,7 +1,7 @@
 
 <div class="container" [ngClass]="{'deleted': deleted, 'newlyCreated': newlyCreated}" >
 <div class="father" [ngClass]="{'flipped': flipped}">
-  <div class="front">
+  <div class="front" >
     <header (click)="frontClicked()" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }" >{{meeting.room}}  </header>
     <h3>{{meeting.start| date:"MMMM d, y z"}}</h3>
     <p>Host: {{meeting.creator}}</p>
