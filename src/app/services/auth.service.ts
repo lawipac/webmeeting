@@ -25,6 +25,8 @@ export class AuthService {
   private ttl: number = 0;
   private ts: number =0 ;
 
+  private nick: string = "";
+
   constructor(private router: Router, private app: AppService) {
   }
 
@@ -53,6 +55,11 @@ export class AuthService {
     this.app.setLocalUser(this.email);
   }
 
+  public setNick(v: string){
+    this.nick = v;
+    console.log("change to nickname", this.nick);
+  }
+
   public setModerator(v: boolean){
     this.moderator  = v;
   }
@@ -69,6 +76,9 @@ export class AuthService {
     return this.email;
   }
 
+  public getNick(): string{
+    return this.nick;
+  }
   public isModerator(): boolean{
     return this.moderator;
   }
@@ -176,7 +186,8 @@ export class AuthInterceptor implements HttpInterceptor {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${this.auth.token()}`,
-          'x-biukop-otp': this.auth.token()
+          'x-biukop-otp': this.auth.token(),
+          // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
         }
 
       });

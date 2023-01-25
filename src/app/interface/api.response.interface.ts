@@ -20,6 +20,7 @@ export interface SJwt{
 }
 export interface RJwt{
   jwt: string;
+  s3: string;
 }
 
 export interface SSchedulemeeting{

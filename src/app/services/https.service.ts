@@ -76,7 +76,7 @@ export class HttpsService {
       email: this.auth.user(),
       room: this.app.currentMeetingRoom,
       start: this.app.currentMeetingStart,
-      nick: this.auth.user()
+      nick: this.auth.getNick()
     }
     return this.http.post<RJwt>(this.urlFor('jwt'), input);
   }

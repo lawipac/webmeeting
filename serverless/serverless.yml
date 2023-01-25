@@ -43,12 +43,16 @@ params:
 
 resources:
   Resources:
-
     StaticSite:
       Type: AWS::S3::Bucket
       Properties:
         AccessControl: PublicRead
         BucketName: ${self:custom.client.bucketName}
+        LifecycleConfiguration:
+          Rules:
+            - Status: Enabled
+              ExpirationInDays: 2
+              Prefix: 'event/'
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html

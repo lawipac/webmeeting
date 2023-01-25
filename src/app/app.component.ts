@@ -18,6 +18,8 @@ export class AppComponent {
   title = 'Online Meeting - ' + environment.version;
   al : appLocal = {} as appLocal;
 
+  bname = "";
+    bversion ="";
   constructor(private app: AppService,
               private auth: AuthService,
               private ws: WebsocketService,
@@ -31,6 +33,9 @@ export class AppComponent {
   wsSub: Subscription = {} as Subscription;
   ngOnInit(){
     this.wsSub = this.ws.subscribe(this.onWsEvent, this.constructor.name);
+    this.bname = this.app.detectBrowserName();
+    this.bversion = this.app.detectBrowserVersion();
+
   }
 
   ngOnDestroy(){

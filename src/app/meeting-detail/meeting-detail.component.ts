@@ -29,6 +29,7 @@ export class MeetingDetailComponent {
     this.app.setCurrentMeetingRoom (this.meeting);
     this.https.renewJwt().subscribe( data =>{
         this.auth.setJwt (data.jwt);
+        this.app.CurrentMeetingURL = data.s3;
         let _ = this.router.navigate(['vc']);
     });
   }

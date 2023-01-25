@@ -9,7 +9,7 @@ import {AppService} from "./app.service";
 
 //machine chat message
 export interface MChat {
-  from: appLocal;
+  from: appLocal | string;
   to:   string;
   event: string;
   payload: any;

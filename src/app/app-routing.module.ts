@@ -18,8 +18,8 @@ const routes: Routes = [
   { path: 'dash', canActivate:[AuthGuard], component: DashboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login/:token', component: LoginComponent },
-
-  { path: '',  component: LoginComponent },
+  { path: '',   redirectTo: '/login', pathMatch: 'full' },
+  { path: '**',  component: EmptyComponent},
 ];
 
 if (environment.production == false){

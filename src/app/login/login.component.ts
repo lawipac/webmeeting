@@ -78,7 +78,7 @@ export class LoginComponent {
       //login
       let email = this.registerForm.value.email;
       let otp = this.registerForm.value.otp;
-      const nickName = this.registerForm.get('nickName')?.value;
+      const nickName = this.registerForm.get('nick')?.value;
       this.https.login({email: email,otp: otp, nick: nickName}).subscribe(
         data => {
           console.log(data);
@@ -89,6 +89,7 @@ export class LoginComponent {
             this.auth.setTTL(data.ttl);
             this.auth.setUser(email);
             this.auth.setModerator(data.isModerator);
+            this.auth.setNick(nickName);
             let _ = this.router.navigate(['/dash']);
           }else{
             this.dialogMessage="Magic link expired, please get another code";
