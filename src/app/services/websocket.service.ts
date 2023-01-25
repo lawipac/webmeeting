@@ -1,16 +1,18 @@
 // src\app\services\websocket.service.ts
-import { Injectable } from "@angular/core";
-import { Observable, Observer } from 'rxjs';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import {Injectable} from "@angular/core";
+import {Observable, Observer, Subject, Subscription} from 'rxjs';
+import {AnonymousSubject} from 'rxjs/internal/Subject';
+import {map} from 'rxjs/operators';
+import {environment} from '../../environments/environment';
+import {appLocal} from "../interface/api.response.interface";
+import {AppService} from "./app.service";
 
 //machine chat message
 export interface MChat {
-  from: string;
+  from: appLocal;
   to:   string;
   event: string;
+
 }
 
 export interface WsMessage {
@@ -23,7 +25,7 @@ export class WebsocketService {
   //@ts-ignore
   private subject: AnonymousSubject<MessageEvent> ;
   // @ts-ignore
-  public messages: Subject<WsMessage> = {} as Subject<WsMessage> ;
+  private messages: Subject<WsMessage> = {} as Subject<WsMessage> ;
   private sendQueue: WsMessage[] =[];
   //@ts-ignore
   private ws : WebSocket;
@@ -32,6 +34,9 @@ export class WebsocketService {
     this.reconnect();
   }
 
+  ngOnDestroy(){
+    console.log("destroyed");
+  }
   public connect(url: string): AnonymousSubject<MessageEvent> {
     this.close();
     //perform connection or re-connection
@@ -50,7 +55,7 @@ export class WebsocketService {
     this.messages = <Subject<WsMessage>>this.connect(environment.wss).pipe(
       map(
         (response: MessageEvent): WsMessage => {
-          console.log(response.data);
+          console.log("incoming ",response.data);
           let data = JSON.parse(response.data)
           return data;
         }
@@ -87,7 +92,7 @@ export class WebsocketService {
       if (m != undefined) {
         this.messages.next(m);
       }
-    };
+    }
   }
 
   public send( m: WsMessage) : void{
@@ -98,5 +103,10 @@ export class WebsocketService {
       console.log("direct send");
       this.messages.next(m);
     }
+  }
+
+  public subscribe(fn: (msg: WsMessage) => void, src: string="anonymous"): Subscription {
+    console.log(" ws subscribed by", src);
+    return this.messages.subscribe(fn);
   }
 }

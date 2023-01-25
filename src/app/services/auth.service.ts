@@ -9,6 +9,7 @@ import {
 import {Observable} from "rxjs";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {environment} from "../../environments/environment";
+import {AppService} from "./app.service";
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
   private ttl: number = 0;
   private ts: number =0 ;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private app: AppService) {
   }
 
   public setToken(t: string){
@@ -49,6 +50,7 @@ export class AuthService {
 
   public setUser(v: string){
     this.email = v;
+    this.app.setLocalUser(this.email);
   }
 
   public setModerator(v: boolean){

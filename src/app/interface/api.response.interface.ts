@@ -118,3 +118,11 @@ export interface RDeleteMeeting{
   status: boolean;
   input: meetingKey[];
 }
+
+export interface appLocal {
+  version: string
+  uuid: string;
+  email: string;
+  ts: number;
+  totalVisit: number
+}

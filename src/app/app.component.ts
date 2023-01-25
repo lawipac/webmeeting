@@ -1,9 +1,12 @@
 import {ChangeDetectorRef, Component, HostListener} from '@angular/core';
 import {AppService} from "./services/app.service";
-import {WebsocketService} from "./services/websocket.service";
+import {WebsocketService, WsMessage} from "./services/websocket.service";
 import {HttpsService} from "./services/https.service";
 import {Router} from "@angular/router";
 import {environment} from "../environments/environment";
+import {Subscription} from "rxjs";
+import {appLocal} from "./interface/api.response.interface";
+import {AuthService} from "./services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -13,26 +16,34 @@ import {environment} from "../environments/environment";
 export class AppComponent {
 
   title = 'Online Meeting - ' + environment.version;
-
+  al : appLocal = {} as appLocal;
 
   constructor(private app: AppService,
+              private auth: AuthService,
               private ws: WebsocketService,
               private https: HttpsService ,
               private cdRef : ChangeDetectorRef,
               private router: Router) {
     console.log(this.app.env);
-    this.ws.messages.subscribe(msg => {
-      console.log("received message ", msg);
-    });
+
   }
 
+  wsSub: Subscription = {} as Subscription;
   ngOnInit(){
-    // let _ = this.router.navigate(['test']);
+    this.wsSub = this.ws.subscribe(this.onWsEvent, this.constructor.name);
+  }
+
+  ngOnDestroy(){
+    this.wsSub.unsubscribe();
   }
 
   @HostListener('document:visibilitychange', ['$event'])
   visibilitychange() {
     this.app.checkHiddenDocument();
+  }
+
+  onWsEvent(msg: WsMessage): void{
+    console.log(" app component received ws message", msg);
   }
 
 

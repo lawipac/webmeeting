@@ -4,5 +4,7 @@ export const environment = {
   production: false,
   apiKey: 'biukop-is-helping-superforex',
   apiBaseUrl: 'http://192.168.1.35:3000',
-  wss: "wss://wss.webtradepay.au/meeting-dev"
+  wss: "wss://wss.webtradepay.au/meeting-dev",
+  appLocal: "biukop-meeting-webtradepay-au",
+  jaasAppId: "vpaas-magic-cookie-35408203be1646ac811594fa79ddb6ce"
 }; // this is the same as environment.dev.ts ---

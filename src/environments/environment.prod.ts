@@ -5,5 +5,7 @@ export const environment = {
   production: true,
   apiKey: 'biukop-is-helping-superforex',
   apiBaseUrl: 'https://api.webtradepay.au/v1',
-  wss: "wss://wss.webtradepay.au/meeting-prod"
+  wss: "wss://wss.webtradepay.au/meeting-prod",
+  appLocal: "biukop-meeting-webtradepay-au",
+  jaasAppId: "vpaas-magic-cookie-35408203be1646ac811594fa79ddb6ce"
 };

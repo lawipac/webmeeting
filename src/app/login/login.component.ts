@@ -4,10 +4,11 @@ import {Buffer} from 'buffer';
 import {ROtp} from "../interface/api.response.interface";
 import {Md5} from "ts-md5";
 import {AppService} from "../services/app.service";
-import {WebsocketService} from "../services/websocket.service";
+import {WebsocketService, WsMessage} from "../services/websocket.service";
 import {HttpsService} from "../services/https.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
+import {Subscription} from "rxjs";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -34,6 +35,17 @@ export class LoginComponent {
               private router: Router) {
   }
 
+
+  onWsEvent(msg: WsMessage): void{
+    console.log(" app component received ws message", msg);
+  }
+
+  wsSub: Subscription = {} as Subscription;
+  ngOnDestroy(){
+    console.log("ws unscribed");
+    this.wsSub.unsubscribe();
+  }
+
   ngOnInit(){
     this.route.params.subscribe( params => {
       console.log(params, this);
@@ -41,6 +53,7 @@ export class LoginComponent {
       if (s!= undefined && s != '')
         this.doMagicTokenLogin(s);
     } );
+    this.wsSub = this.ws.subscribe(this.onWsEvent, this.constructor.name);
   }
 
 
@@ -128,7 +141,7 @@ export class LoginComponent {
     const email = this.registerForm.get('email')?.value;
     const otp = this.registerForm.get('otp')?.value;
 
-    const src = email + "-" +  otp ;
+    const src = email.toLowerCase() + "-" +  otp ;
     //console.log(email,pin,src,Md5.hashStr(src), this.otpResponse.otp);
     return Md5.hashStr(src) == this.otpResponse.otp;
   }
@@ -141,4 +154,12 @@ export class LoginComponent {
       this.router.navigate(['/login']);
     }
   }
+
+
+
+
+
+
+
+
 }

@@ -3,6 +3,8 @@ import {MeetingItem} from "../interface/api.response.interface";
 import {ScheduleMeetingComponent} from "../schedule-meeting/schedule-meeting.component";
 import {MeetinglistComponent} from "../meetinglist/meetinglist.component";
 import {AuthService} from "../services/auth.service";
+import {WebsocketService} from "../services/websocket.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +17,15 @@ export class DashboardComponent {
   // @ts-ignore
   @ViewChild(MeetinglistComponent) meetingList: MeetinglistComponent;
 
-  constructor(private auth: AuthService){}
+
+  ngOnInit() {
+
+  }
+
+  ngOnDestroy(){
+
+  }
+  constructor(private auth: AuthService, private ws: WebsocketService){}
   ngAfterViewInit(): void{
     setTimeout( () =>{
       if ( this.meetingList.meetings.length == 0 && this.auth.isModerator() )
