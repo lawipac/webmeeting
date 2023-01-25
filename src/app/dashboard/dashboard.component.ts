@@ -32,8 +32,16 @@ export class DashboardComponent {
 
   }
 
-  onCancel() {
+  hideAdd = false;
+  onAdd() {
     console.log(this.scheduleMeeting, typeof this.scheduleMeeting);
+    if ( this.scheduleMeeting instanceof  ScheduleMeetingComponent){
+      this.scheduleMeeting.folded=false;
+      this.hideAdd = true;
+    }
+  }
+  onCancel(){
+    this.hideAdd = false;
   }
 
   onZeroMeeting() {

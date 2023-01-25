@@ -7,3 +7,6 @@
 </div>
 <app-empty *ngIf="noMeeting"></app-empty>
 <app-meetinglist (zeroMeeting)="onZeroMeeting()"></app-meetinglist>
+<div *ngIf="!hideAdd" class="float" (click)="onAdd()">
+  <div class="button"> +  </div>
+</div>

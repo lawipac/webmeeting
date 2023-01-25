@@ -19,7 +19,8 @@ export class AppComponent {
   al : appLocal = {} as appLocal;
 
   bname = "";
-    bversion ="";
+  bversion ="";
+  appVer = "";
   constructor(private app: AppService,
               private auth: AuthService,
               private ws: WebsocketService,
@@ -35,6 +36,7 @@ export class AppComponent {
     this.wsSub = this.ws.subscribe(this.onWsEvent, this.constructor.name);
     this.bname = this.app.detectBrowserName();
     this.bversion = this.app.detectBrowserVersion();
+    this.appVer = environment.version;
 
   }
 
