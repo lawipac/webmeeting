@@ -41,6 +41,7 @@ export class AppComponent {
     this.bname = this.app.detectBrowserName();
     this.bversion = this.app.detectBrowserVersion();
     this.appVer = environment.version;
+    this.toggleSleep();
 
   }
 

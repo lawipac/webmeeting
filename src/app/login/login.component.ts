@@ -144,4 +144,8 @@ export class LoginComponent {
       let _ = this.router.navigate(['/login']);
     }
   }
+
+  onLogoClick() {
+    this.app.toggleNoSleep();
+  }
 }

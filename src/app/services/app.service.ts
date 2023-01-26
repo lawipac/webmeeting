@@ -174,4 +174,11 @@ export class AppService {
     this.noSleep.disable();
   }
 
+  toggleNoSleep(){
+    if (this.noSleep.isEnabled)
+      this.stopNoSleep();
+    else
+      this.stopNoSleep();
+  }
+
 }
