@@ -155,7 +155,8 @@ export class VcComponent {
   handleVideoConferenceLeft = () => {
     console.log("handleVideoConferenceLeft");
     //delete this.api;
-    this.router.navigate(['dash']);
+    let _ = this.router.navigate(['dash']);
+    this.app.stopNoSleep();
   }
 
   handleMuteStatus = (audio:any) => {

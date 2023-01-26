@@ -1,11 +1,11 @@
 import { environment } from '../../environments/environment';
 import {webSocket} from "rxjs/webSocket";
 import {Injectable} from "@angular/core";
-import {WsMessage, WebsocketService, MChat} from "./websocket.service";
+import {WebsocketService, MChat} from "./websocket.service";
 import {appLocal, MeetingItem} from "../interface/api.response.interface";
-import {AuthService} from "./auth.service";
 import { v4 as uuid } from 'uuid';
 import {Subscription} from "rxjs";
+import NoSleep from "nosleep.js";
 
 @Injectable({ providedIn: 'root'})
 export class AppService {
@@ -15,12 +15,15 @@ export class AppService {
 
   private al : appLocal = {} as appLocal;
 
+
   constructor(private ws: WebsocketService) {
     this.loadAppLocal();
     // setInterval(()=>{
     //   console.log(this.ws.getState());
     // }, 1000);
   }
+
+
 
   public announce(c: Partial<MChat>){
     c.from = this.al;
@@ -158,6 +161,17 @@ export class AppService {
     matchTest= matchTest[2]? [matchTest[1], matchTest[2]]: [navigator.appName, navigator.appVersion, '-?'];
     if((tem= userAgent.match(/version\/(\d+)/i))!= null) matchTest.splice(1, 1, tem[1]);
     return matchTest.join(' ');
+  }
+
+
+
+  noSleep = new NoSleep();
+  startNoSleep(){
+    this.noSleep.enable();
+  }
+
+  stopNoSleep(){
+    this.noSleep.disable();
   }
 
 }

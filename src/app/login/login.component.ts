@@ -4,11 +4,10 @@ import {Buffer} from 'buffer';
 import {ROtp} from "../interface/api.response.interface";
 import {Md5} from "ts-md5";
 import {AppService} from "../services/app.service";
-import {MChat, WebsocketService, WsMessage} from "../services/websocket.service";
+import {WebsocketService} from "../services/websocket.service";
 import {HttpsService} from "../services/https.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
-import {Subscription} from "rxjs";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -145,12 +144,4 @@ export class LoginComponent {
       let _ = this.router.navigate(['/login']);
     }
   }
-
-
-
-
-
-
-
-
 }

@@ -27,6 +27,7 @@ export class MeetingDetailComponent {
 
   onEnterMeting() {
     this.app.setCurrentMeetingRoom (this.meeting);
+    this.app.startNoSleep();
     this.https.renewJwt().subscribe( data =>{
         this.auth.setJwt (data.jwt);
         this.app.CurrentMeetingURL = data.s3;

@@ -1,7 +1,7 @@
 
 <app-topbar></app-topbar>
 <div>
-  <span class="version">{{bname}}-{{bversion}}-{{appVer}}</span>
+  <span class="version" (click)="toggleSleep()" [ngClass]="{'bold': noSleep}"> {{bname}}-{{bversion}}-{{appVer}}</span>
 </div>
 <router-outlet></router-outlet>
 

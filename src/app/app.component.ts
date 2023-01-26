@@ -8,6 +8,7 @@ import {Subscription} from "rxjs";
 import {appLocal} from "./interface/api.response.interface";
 import {AuthService} from "./services/auth.service";
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,6 +22,9 @@ export class AppComponent {
   bname = "";
   bversion ="";
   appVer = "";
+
+
+
   constructor(private app: AppService,
               private auth: AuthService,
               private ws: WebsocketService,
@@ -55,6 +59,14 @@ export class AppComponent {
   }
 
 
-
+  noSleep=false;
+  toggleSleep() {
+    if (this.noSleep){
+      this.app.stopNoSleep();
+    }else{
+      this.app.startNoSleep();
+    }
+    this.noSleep = ! this.noSleep;
+  }
 }
 
