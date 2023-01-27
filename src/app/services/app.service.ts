@@ -2,10 +2,11 @@ import { environment } from '../../environments/environment';
 import {webSocket} from "rxjs/webSocket";
 import {Injectable} from "@angular/core";
 import {WebsocketService, MChat} from "./websocket.service";
-import {appLocal, MeetingItem} from "../interface/api.response.interface";
-import { v4 as uuid } from 'uuid';
+import {MeetingItem, SLoginByToken} from "../interface/api.response.interface";
+
 import {Subscription} from "rxjs";
 import NoSleep from "nosleep.js";
+import {Machine, LocalService} from "./local.service";
 
 @Injectable({ providedIn: 'root'})
 export class AppService {
@@ -13,20 +14,16 @@ export class AppService {
   public env = environment;
   public subject = webSocket(environment.wss);
 
-  private al : appLocal = {} as appLocal;
 
+  constructor(private ws: WebsocketService, private ls: LocalService) {
 
-  constructor(private ws: WebsocketService) {
-    this.loadAppLocal();
-    // setInterval(()=>{
-    //   console.log(this.ws.getState());
-    // }, 1000);
   }
 
 
 
+
   public announce(c: Partial<MChat>){
-    c.from = this.al;
+    c.from = this.ls.getMachine();
     c.to = "all";
     this.ws.send(c as MChat);
   }
@@ -74,51 +71,16 @@ export class AppService {
     return this.start;
   }
 
-
-  private loadAppLocal() {
-    const s = localStorage.getItem( environment.appLocal);
-    if(s && s != "" && s!="{}") {
-      try {
-        this.al = JSON.parse(s);
-        this.al.totalVisit = this.al.totalVisit + 1;
-        this.writeAppLocal();
-      } catch(e) {
-        this.newAppLocal();
-      }
-    }else{
-      this.newAppLocal();
-    }
-  }
-
-  newAppLocal(){
-    this.al.uuid = this.Uuid();
-    this.al.email= "";
-    this.al.totalVisit = 0;
-    this.writeAppLocal();
-  }
-
-  writeAppLocal(){
-    this.al.version = environment.version;
-    this.al.ts = Date.now();
-    localStorage.setItem(environment.appLocal, JSON.stringify(this.al));
-  }
+  private loadAppLocal() {}
 
   setLocalUser(email: string = ""){
-    this.al.email = email;
-    this.writeAppLocal();
+    this.ls.setEmail(email);
   }
 
-  Uuid(): string {
-    // return "biukop-" + crypto.randomUUID();
-    return "biukop-" + uuid();
-  }
-  getAppLocal(): appLocal {
-    return this.al;
-  }
 
-  public fromMyself(from: appLocal | string): boolean{
+  public fromMyself(from: Machine  | string): boolean{
     if (typeof from == 'string') return false;
-    if (from.uuid == this.al.uuid) return true;
+    if (from.uuid == this.ls.getMachine().uuid) return true;
     return false;
   }
 

@@ -5,7 +5,7 @@ import {HttpsService} from "./services/https.service";
 import {Router} from "@angular/router";
 import {environment} from "../environments/environment";
 import {Subscription} from "rxjs";
-import {appLocal} from "./interface/api.response.interface";
+import {Machine} from "./services/local.service";
 import {AuthService} from "./services/auth.service";
 
 
@@ -17,7 +17,7 @@ import {AuthService} from "./services/auth.service";
 export class AppComponent {
 
   title = 'Online Meeting - ' + environment.version;
-  al : appLocal = {} as appLocal;
+  al : Machine = {} as Machine;
 
   bname = "";
   bversion ="";

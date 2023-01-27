@@ -8,25 +8,53 @@ import {
   RDeleteMeeting, RJwt,
   Rlogin,
   ROtp, SJwt,
-  SLogin,
+  SLogin, SLoginByToken,
   SQueryMeeting
 } from "../interface/api.response.interface";
 import {AppService} from "./app.service";
 import {environment} from "../../environments/environment";
 import {AuthService} from "./auth.service";
+import {LocalService} from "./local.service";
 
 @Injectable({ providedIn: 'root'})
 export class HttpsService {
-  constructor(private http: HttpClient, private app: AppService, private auth: AuthService) { }
-
-   url = new Map<string,string>([
+  url = new Map<string,string>([
     ["otp", this.app.env.apiBaseUrl + "/otp"],
     ["login", this.app.env.apiBaseUrl + "/login"],
+    ["login/token", this.app.env.apiBaseUrl + "/login/token"],
     ["schedule-meeting", this.app.env.apiBaseUrl + "/schedule-meeting"],
     ["jwt", this.app.env.apiBaseUrl + "/jwt"],
     ["meeting", this.app.env.apiBaseUrl + "/query/meetings"],
     ["recording", this.app.env.apiBaseUrl + "/query/recordings"],
   ]);
+
+  constructor(private http: HttpClient, private app: AppService, private ls: LocalService, private auth: AuthService) {
+    this.tryAutoLoginBySavedToken();
+  }
+
+  private tryAutoLoginBySavedToken(){
+    const savedToken = this.ls.getSecret().authToken;
+    if (savedToken != undefined && savedToken != "" ){
+      let input :SLoginByToken = {
+        email: this.ls.getMachine().email,
+        token: savedToken
+      }
+      this.loginByToken(input).subscribe(
+        data => {
+          console.log(data);
+          if (data.status ) { // == true
+            this.auth.setOtp(data.otp);
+            this.auth.setTS(data.ts);
+            this.auth.setToken(data.auth);
+            this.auth.setTTL(data.ttl);
+            this.auth.setUser(this.ls.getMachine().email);
+            this.auth.setModerator(data.isModerator);
+            this.auth.setNick(data.nick);
+          }
+        }
+      );
+    }
+  }
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -52,6 +80,11 @@ export class HttpsService {
 
   public login( param : SLogin): Observable<Rlogin> {
     return this.http.post<Rlogin>(this.urlFor("login"), param, this.httpOptions);
+  }
+
+  public loginByToken( param: SLoginByToken) : Observable<Rlogin> {
+    return this.http.post<Rlogin>(
+      this.urlFor("login/token"), param, this.httpOptions);
   }
 
   public scheduleMeeting(item: MeetingItem): Observable<MeetingItem>{

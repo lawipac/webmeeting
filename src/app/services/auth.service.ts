@@ -10,6 +10,9 @@ import {Observable} from "rxjs";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {AppService} from "./app.service";
+import {LocalService} from "./local.service";
+import {HttpsService} from "./https.service";
+import {SLoginByToken} from "../interface/api.response.interface";
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
@@ -27,8 +30,12 @@ export class AuthService {
 
   private nick: string = "";
 
-  constructor(private router: Router, private app: AppService) {
+  constructor(private ls: LocalService,
+              private router: Router,
+              private app: AppService) {
   }
+
+
 
   public setToken(t: string){
     this.authToken = t;
@@ -55,9 +62,16 @@ export class AuthService {
     this.app.setLocalUser(this.email);
   }
 
-  public setNick(v: string){
-    this.nick = v;
-    console.log("change to nickname", this.nick);
+  public setNick(v: string){ //always have a nick name
+    if (v == undefined){
+      this.nick = ""
+      console.log("clear  nickname", this.nick);
+    }
+
+    else{
+      this.nick = v;
+      console.log("change to nickname", this.nick);
+    }
   }
 
   public setModerator(v: boolean){

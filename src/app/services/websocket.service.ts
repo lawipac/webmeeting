@@ -4,12 +4,11 @@ import {Observable, Observer, Subject, Subscription} from 'rxjs';
 import {AnonymousSubject} from 'rxjs/internal/Subject';
 import {map} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {appLocal} from "../interface/api.response.interface";
-import {AppService} from "./app.service";
+import {Machine} from "./local.service";
 
 //machine chat message
 export interface MChat {
-  from: appLocal | string;
+  from: Machine | string;
   to:   string;
   event: string;
   payload: any;

@@ -57,6 +57,14 @@ export interface Rlogin{
   auth: string;//token
 
   isModerator: boolean
+
+  email: string;
+  nick: string;
+}
+
+export interface SLoginByToken{
+  email: string;
+  token: string;
 }
 
 export interface SQueryMeeting{
@@ -120,13 +128,6 @@ export interface RDeleteMeeting{
   input: meetingKey[];
 }
 
-export interface appLocal {
-  version: string
-  uuid: string;
-  email: string;
-  ts: number;
-  totalVisit: number
-}
 
 export interface Guest{
   name: string;
