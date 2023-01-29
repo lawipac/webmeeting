@@ -8,11 +8,12 @@ import {
 } from "@angular/router";
 import {Observable} from "rxjs";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+
 import {AppService} from "./app.service";
 import {LocalService} from "./local.service";
-import {HttpsService} from "./https.service";
-import {SLoginByToken} from "../interface/api.response.interface";
+import {Md5} from 'ts-md5';
+import {Buffer} from 'buffer'
+
 
 @Injectable({ providedIn: 'root'})
 export class AuthService {
@@ -44,6 +45,18 @@ export class AuthService {
 
   public token(): string{
     return this.authToken;
+  }
+
+  public x_biukop_otp(): string {
+    let j ={
+      email: this.email,
+      otp : this.otp,
+      ts: Date.now(),
+      sig: ""
+    };
+    j.sig = Md5.hashStr(j.email + j.otp + j.ts.toString() + this.authToken);
+    let s = JSON.stringify(j);
+    return Buffer.from(s).toString('base64');
   }
 
   public setOtp(v : string) {
@@ -195,8 +208,8 @@ export class AuthInterceptor implements HttpInterceptor {
     if (this.auth.isAuth()) {
       request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.auth.token()}`,
-          'x-biukop-otp': this.auth.token(),
+          Authorization: `Bearer ${this.auth.x_biukop_otp()}`,
+          'x-biukop-otp': this.auth.x_biukop_otp(),
           // "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36"
         }
 
