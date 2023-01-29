@@ -23,6 +23,8 @@
     <header (click)="backClicked()" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }">
       <span class="k-icon k-i-change-manually k-i-change-manually k-color-dark k-icon-xl"></span> {{status}}
     </header>
+    <button *ngFor="let v of meeting.videos | keyvalue " kendoButton [icon]="'play'" [themeColor]="'primary'"
+            title="Meeting Recordings" (click)="onShowVideo(v.key, v.value)" class="video"></button>
     <p> Created on {{meeting.ts |  date:"MMMM d, y z"}} </p>
     <p>creator: {{meeting.creator}}</p>
     <p *ngFor="let g of meeting.guests">
@@ -33,7 +35,10 @@
 <!--      <button (click)="onEditMeeting()" kendoButton>Edit</button>-->
 <!--      <button (click)="onCancelMeeting()" kendoButton>Cancel</button>-->
       <button (click)="onDeleteMeeting()" kendoButton>delete</button>
+
     </div>
   </div>
 </div>
 </div>
+
+<app-video-player [videoId]="videoId" *ngIf="showVideo" (closeButtonClicked)=" onCloseVideo($event)"></app-video-player>

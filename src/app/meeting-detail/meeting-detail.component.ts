@@ -4,6 +4,7 @@ import {AppService} from "../services/app.service";
 import {Router} from "@angular/router";
 import {HttpsService} from "../services/https.service";
 import {AuthService} from "../services/auth.service";
+import {KeyValue} from '@angular/common';
 
 @Component({
   selector: 'app-meeting-detail',
@@ -24,6 +25,10 @@ export class MeetingDetailComponent {
   deleted = false;
   newlyCreated= false;
   urgency: number = 0;
+
+  videoId = "";
+  showVideo = false;
+
 
   onEnterMeting() {
     this.app.setCurrentMeetingRoom (this.meeting);
@@ -120,5 +125,15 @@ export class MeetingDetailComponent {
 
   backClicked() {
     this.flipped=false;
+  }
+
+  onCloseVideo(shown: boolean) {
+    this.showVideo = false;
+  }
+
+  onShowVideo(key: string, value: string) {
+    console.log(key,value, typeof value);
+    this.videoId = value;
+    this.showVideo = true;
   }
 }

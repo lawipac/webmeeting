@@ -88,6 +88,8 @@ export interface MeetingItem{
   room: string;
 
   description:string;
+
+  videos: Map<string, string>;
 }
 
 export interface SQueryRecording{

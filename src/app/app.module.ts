@@ -26,6 +26,8 @@ import { MeetinglistComponent } from './meetinglist/meetinglist.component';
 import { MeetingDetailComponent } from './meeting-detail/meeting-detail.component';
 import { TopbarComponent } from './topbar/topbar.component';
 import { EmptyComponent } from './empty/empty.component';
+import { VideoPlayerComponent } from './video-player/video-player.component';
+import {SafePipe} from "./pipe/safe.pipe";
 
 
 
@@ -45,7 +47,9 @@ import { EmptyComponent } from './empty/empty.component';
     MeetinglistComponent,
     MeetingDetailComponent,
     TopbarComponent,
-    EmptyComponent
+    EmptyComponent,
+    VideoPlayerComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,
