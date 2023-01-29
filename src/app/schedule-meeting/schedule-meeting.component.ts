@@ -17,7 +17,7 @@ export class ScheduleMeetingComponent {
   abandonedEvent: EventEmitter<null> = new EventEmitter<null>();
 
   public rooms: Array<string> = [
-    "Auditorium","Public","Seminar","Enquiry","Presale","CustomSupport","Conference"
+    "auditorium","public","seminar","enquiry","presale","customer-support","conference","training"
   ];
   public form: FormGroup;
   public strGuests = "Invite 1 guest";
@@ -32,7 +32,7 @@ export class ScheduleMeetingComponent {
   folded= true;
   constructor(private fb: FormBuilder, private auth: AuthService, private https: HttpsService){
     this.form = this.fb.group({
-      room: 'Auditorium',
+      room: 'enquiry',
       start: Date.now(),
       startDate: new Date(),
       duration: 3600002,
@@ -93,7 +93,7 @@ export class ScheduleMeetingComponent {
   }
   onSubmit(){
     this.form.markAllAsTouched();
-    let item: MeetingItem = {
+    let item: Partial<MeetingItem> = {
       ts: Date.now(),
       creator: this.auth.user(),
       guests: this.form.value.guests,
@@ -105,7 +105,7 @@ export class ScheduleMeetingComponent {
       description: this.form.value.description
     };
     if (this.form.valid){
-      this.https.scheduleMeeting(item).subscribe(
+      this.https.scheduleMeeting(item as MeetingItem).subscribe(
         item => {
           console.log(item);
           this.meetingCreatedEvent.emit(item);
