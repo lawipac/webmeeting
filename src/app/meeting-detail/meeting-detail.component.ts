@@ -136,4 +136,8 @@ export class MeetingDetailComponent {
     this.videoId = value;
     this.showVideo = true;
   }
+
+  onInformGuest(g: { email: string; name: string }) {
+    console.log(" inform guest ", g.name, g.email);
+  }
 }

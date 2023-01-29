@@ -7,6 +7,7 @@
 </div>
 <app-empty *ngIf="noMeeting"></app-empty>
 <app-meetinglist (zeroMeeting)="onZeroMeeting()"></app-meetinglist>
-<div *ngIf="!hideAdd" class="float" (click)="onAdd()">
-  <div class="button"> +  </div>
-</div>
+
+
+<button kendoButton [icon]="'plus-outline'" [themeColor]="'warning'" [rounded]="'full'"     [size]="'large'"
+        title="Meeting Recordings" (click)="onAdd()" class="float k-icon-xl"></button>

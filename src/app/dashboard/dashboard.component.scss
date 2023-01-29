@@ -2,22 +2,12 @@ app-schedule-meeting{
   max-width:500px;
 }
 
-div.float{
-  position:fixed;
-  right:10px;
-  bottom:10px;
-  height:64px;
-  width:64px;
-  opacity: 0.9;
-  overflow:hidden;
-  border-radius: 100px;
-  background-color: yellow;
-  text-align: center;
-  display:table;
-  div.button{
-    display:table-cell;
-    font-weight: 900;
-    font-size: 48px;
-    vertical-align: middle;
-  }
+
+button.float{
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  width: 48px;
+  height: 48px;
+  border-radius: 48px;
 }

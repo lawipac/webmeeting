@@ -15,33 +15,40 @@ import {AppService} from "./app.service";
 import {environment} from "../../environments/environment";
 import {AuthService} from "./auth.service";
 import {LocalService} from "./local.service";
+import {Router} from "@angular/router";
 
 @Injectable({ providedIn: 'root'})
 export class HttpsService {
   url = new Map<string,string>([
     ["otp", this.app.env.apiBaseUrl + "/otp"],
     ["login", this.app.env.apiBaseUrl + "/login"],
-    ["login/token", this.app.env.apiBaseUrl + "/login/token"],
     ["schedule-meeting", this.app.env.apiBaseUrl + "/schedule-meeting"],
     ["jwt", this.app.env.apiBaseUrl + "/jwt"],
     ["meeting", this.app.env.apiBaseUrl + "/query/meetings"],
     ["recording", this.app.env.apiBaseUrl + "/query/recordings"],
   ]);
 
-  constructor(private http: HttpClient, private app: AppService, private ls: LocalService, private auth: AuthService) {
+  constructor(private http: HttpClient,
+              private app: AppService,
+              private ls: LocalService,
+              private auth: AuthService,
+              private router: Router) {
     this.tryAutoLoginBySavedToken();
   }
 
   private tryAutoLoginBySavedToken(){
+
     const savedToken = this.ls.getSecret().authToken;
+    console.log('auto login by savedToken', savedToken, this.ls);
     if (savedToken != undefined && savedToken != "" ){
       let input :SLoginByToken = {
         email: this.ls.getMachine().email,
-        token: savedToken
+        token: savedToken,
+        nick: this.ls.getMachine().nick
       }
       this.loginByToken(input).subscribe(
         data => {
-          console.log(data);
+          console.log('login by token', data);
           if (data.status ) { // == true
             this.auth.setOtp(data.otp);
             this.auth.setTS(data.ts);
@@ -50,6 +57,7 @@ export class HttpsService {
             this.auth.setUser(this.ls.getMachine().email);
             this.auth.setModerator(data.isModerator);
             this.auth.setNick(data.nick);
+            let _ = this.router.navigate(['/dash']);
           }
         }
       );
@@ -84,7 +92,7 @@ export class HttpsService {
 
   public loginByToken( param: SLoginByToken) : Observable<Rlogin> {
     return this.http.post<Rlogin>(
-      this.urlFor("login/token"), param, this.httpOptions);
+      this.urlFor("login"), param, this.httpOptions);
   }
 
   public scheduleMeeting(item: MeetingItem): Observable<MeetingItem>{

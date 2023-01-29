@@ -60,11 +60,13 @@ export interface Rlogin{
 
   email: string;
   nick: string;
+
 }
 
 export interface SLoginByToken{
   email: string;
   token: string;
+  nick: string;
 }
 
 export interface SQueryMeeting{

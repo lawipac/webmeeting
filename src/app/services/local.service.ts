@@ -9,6 +9,7 @@ export interface Machine {
   email: string;
   ts: number;
   totalVisit: number
+  nick: string;
 }
 
 export interface Secret{
@@ -67,12 +68,19 @@ export class LocalService {
     if ( r == false ){
       console.log("Biukop rebuild person ...");
       this.hdd.secret.authToken = "";
+      this.writeSecret(this.hdd.secret);
+    }else{
+      this.hdd.secret = r;
     }
-    this.writeSecret(this.hdd.secret);
   }
 
   setEmail(email: string= ""){
     this.hdd.machine.email = email;
+    this.writeMachine(this.hdd.machine);
+  }
+
+  setNickname(v: string =""){
+    this.hdd.machine.nick = v;
     this.writeMachine(this.hdd.machine);
   }
 
@@ -82,6 +90,11 @@ export class LocalService {
 
   public getSecret(): Secret {
     return this.hdd.secret;
+  }
+
+  public setSecret(v: string) {
+    this.hdd.secret.authToken = v;
+    this.writeSecret(this.hdd.secret);
   }
 
   newMachine(): Machine {
@@ -110,5 +123,9 @@ export class LocalService {
   Uuid(): string {
     // return "biukop-" + crypto.randomUUID();
     return "biukop-" + uuid();
+  }
+
+  clearAutoLogin() {
+    this.setSecret("");
   }
 }

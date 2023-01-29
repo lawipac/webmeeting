@@ -39,6 +39,7 @@ export class AuthService {
 
   public setToken(t: string){
     this.authToken = t;
+    this.ls.setSecret(t);
   }
 
   public token(): string{
@@ -62,16 +63,10 @@ export class AuthService {
     this.app.setLocalUser(this.email);
   }
 
-  public setNick(v: string){ //always have a nick name
-    if (v == undefined){
-      this.nick = ""
-      console.log("clear  nickname", this.nick);
-    }
-
-    else{
+  public setNick(v: string = ""){ //always have a nickname
       this.nick = v;
       console.log("change to nickname", this.nick);
-    }
+      this.ls.setNickname(v);
   }
 
   public setModerator(v: boolean){
@@ -122,6 +117,7 @@ export class AuthService {
     this.moderator = false;
     this.ttl = 0;
     this.ts = 0;
+    this.ls.clearAutoLogin()
     return true;
   }
   public fakeLogin(): boolean {
