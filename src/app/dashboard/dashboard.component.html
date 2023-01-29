@@ -9,5 +9,7 @@
 <app-meetinglist (zeroMeeting)="onZeroMeeting()"></app-meetinglist>
 
 
-<button kendoButton [icon]="'plus-outline'" [themeColor]="'warning'" [rounded]="'full'"     [size]="'large'"
+<button *ngIf="isModerator"
+        kendoButton [icon]="'plus-outline'" [themeColor]="'warning'" [rounded]="'full'"
+        [size]="'large'"
         title="Meeting Recordings" (click)="onAdd()" class="float k-icon-xl"></button>
