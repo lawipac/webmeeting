@@ -14,14 +14,6 @@
             <kendo-formerror>Error: Not valid email format</kendo-formerror>
           </kendo-formfield>
 
-          <kendo-formfield *ngIf="showOtpInput()" >
-            <kendo-floatinglabel text="Verification Code">
-              <input formControlName="otp" kendoTextBox #otp required placeholder="0000" (keydown)="onOTPKeyDown()"/>
-            </kendo-floatinglabel>
-            <kendo-formhint>{{hint.otp}}</kendo-formhint>
-            <kendo-formerror>Error: Verification Code is required</kendo-formerror>
-          </kendo-formfield>
-
           <kendo-formfield *ngIf="showNameInput()">
             <kendo-floatinglabel text="Your Name (optional)">
               <input
@@ -32,6 +24,17 @@
             </kendo-floatinglabel>
             <kendo-formerror>Error: name is too long (less than 100 char)</kendo-formerror>
           </kendo-formfield>
+
+
+          <kendo-formfield *ngIf="showOtpInput()" >
+            <kendo-floatinglabel text="Verification Code">
+              <input formControlName="otp" kendoTextBox #otp required placeholder="0000" (keydown)="onOTPKeyDown()"/>
+            </kendo-floatinglabel>
+            <kendo-formhint>{{hint.otp}}</kendo-formhint>
+            <kendo-formerror>Error: Verification Code is required</kendo-formerror>
+          </kendo-formfield>
+
+
 
           <div class="k-form-buttons">
             <button class="join" *ngIf="showLogin() " kendoButton themeColor="primary" (click)="onLoginClick()">

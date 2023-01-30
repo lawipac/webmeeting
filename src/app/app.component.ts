@@ -23,6 +23,7 @@ export class AppComponent {
   bversion ="";
   appVer = "";
 
+  isMobile = false;
 
 
   constructor(private app: AppService,
@@ -32,7 +33,7 @@ export class AppComponent {
               private cdRef : ChangeDetectorRef,
               private router: Router) {
     console.log(this.app.env);
-
+    this.isMobile = this.app.isMobileBrowser();
   }
 
   wsSub: Subscription = {} as Subscription;

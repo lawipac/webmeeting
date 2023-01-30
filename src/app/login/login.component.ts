@@ -8,6 +8,7 @@ import {WebsocketService} from "../services/websocket.service";
 import {HttpsService} from "../services/https.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../services/auth.service";
+import {LocalService} from "../services/local.service";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,13 +22,14 @@ export class LoginComponent {
 
   magicTokenLogin = false;
   public registerForm: FormGroup = new FormGroup({
-    nick: new FormControl(),
-    otp: new FormControl(),
-    email: new FormControl("", Validators.email),
+    nick: new FormControl(this.ls.nick, Validators.maxLength(20)),
+    otp: new FormControl(1111, [Validators.min(1000),Validators.max(9999)]),
+    email: new FormControl(this.ls.email, Validators.email),
   });
   otpResponse: ROtp= { otp: "" } as ROtp;
   constructor(private route: ActivatedRoute, private app: AppService,
               private ws: WebsocketService,
+              private ls: LocalService,
               private auth: AuthService,
               private https: HttpsService ,
               private cdRef : ChangeDetectorRef,
@@ -124,7 +126,15 @@ export class LoginComponent {
   }
 
   showNameInput(){
-    return this.isOtpMatched()
+    const e = this.registerForm.get('email');
+    const n = this.registerForm.get('nick');
+    const show = ! e?.pristine && e?.valid || (e != null && e.value !="");
+    if (show) { // set nick if possible
+      if ( n && ( n.value == null || n.value == "") &&  this.ls.email  == e.value){
+        n.setValue(this.ls.nick);
+      }
+    }
+    return show;
   }
 
   isOtpMatched(){

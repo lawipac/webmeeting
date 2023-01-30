@@ -105,6 +105,12 @@ export class LocalService {
     return this.updateAutoFieldsMachine(r);
   }
 
+   get email(): string {
+     return this.hdd.machine.email;
+   }
+   get nick(): string{
+     return this.hdd.machine.nick;
+   }
   private updateAutoFieldsMachine(r: Machine): Machine{
     //auto fields
     r.version = environment.version;

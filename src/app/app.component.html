@@ -1,7 +1,11 @@
 
 <app-topbar></app-topbar>
 <div>
-  <span class="version" (click)="toggleSleep()" [ngClass]="{'bold': noSleep}"> {{bversion}}-{{appVer}}</span>
+  <span class="version" (click)="toggleSleep()" [ngClass]="{'bold': noSleep}">
+    <span *ngIf="!isMobile" class="k-icon k-i-grid k-icon-lg "></span>
+    <span *ngIf="isMobile"  class="k-icon k-i-group "></span>
+    {{bversion}}-{{appVer}}
+  </span>
 </div>
 
 
