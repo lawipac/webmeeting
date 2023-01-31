@@ -38,7 +38,7 @@ export class WebsocketService {
   }
   public connect(url: string): AnonymousSubject<MessageEvent> {
     if (this.ws== undefined)
-      console.log("in ws undefined");
+      console.log("in ws connect, found undefined socket");
     else{
       console.log("ws ready-state:", this.ws.readyState);
     }

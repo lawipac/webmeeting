@@ -50,11 +50,13 @@ export class AuthService {
   public x_biukop_otp(): string {
     let j ={
       email: this.email,
-      otp : this.otp,
+      otp : this.otp ,
       ts: Date.now(),
       sig: ""
     };
-    j.sig = Md5.hashStr(j.email + j.otp + j.ts.toString() + this.authToken);
+    const src = j.email + j.ts.toString() + this.authToken;
+    j.sig = Md5.hashStr(j.email + j.ts.toString() + this.authToken);
+    //console.log(" build token", this.authToken, src, j.sig );
     let s = JSON.stringify(j);
     return Buffer.from(s).toString('base64');
   }

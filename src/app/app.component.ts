@@ -17,10 +17,10 @@ import {AuthService} from "./services/auth.service";
 export class AppComponent {
 
   title = 'Online Meeting - ' + environment.version;
-  al : Machine = {} as Machine;
+  al: Machine = {} as Machine;
 
   bname = "";
-  bversion ="";
+  bversion = "";
   appVer = "";
 
   isMobile = false;
@@ -29,15 +29,16 @@ export class AppComponent {
   constructor(private app: AppService,
               private auth: AuthService,
               private ws: WebsocketService,
-              private https: HttpsService ,
-              private cdRef : ChangeDetectorRef,
+              private https: HttpsService,
+              private cdRef: ChangeDetectorRef,
               private router: Router) {
     console.log(this.app.env);
     this.isMobile = this.app.isMobileBrowser();
   }
 
   wsSub: Subscription = {} as Subscription;
-  ngOnInit(){
+
+  ngOnInit() {
     this.wsSub = this.ws.subscribe(this.onWsEvent, this.constructor.name);
     this.bname = this.app.detectBrowserName();
     this.bversion = this.app.detectBrowserVersion();
@@ -46,7 +47,7 @@ export class AppComponent {
 
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.wsSub.unsubscribe();
   }
 
@@ -55,20 +56,21 @@ export class AppComponent {
     this.app.checkHiddenDocument();
   }
 
-  onWsEvent(msg: MChat): void{
-    if ( environment.production==false)
+  onWsEvent(msg: MChat): void {
+    if (environment.production == false)
       console.log(" app component received ws message", msg);
   }
 
 
-  noSleep=false;
+  noSleep = false;
+
   toggleSleep() {
-    if (this.noSleep){
+    if (this.noSleep) {
       this.app.stopNoSleep();
-    }else{
+    } else {
       this.app.startNoSleep();
     }
-    this.noSleep = ! this.noSleep;
+    this.noSleep = !this.noSleep;
   }
 }
 

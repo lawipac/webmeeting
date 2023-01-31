@@ -40,7 +40,6 @@ export class LoginComponent {
 
   ngOnInit(){
     this.route.params.subscribe( params => {
-      console.log(params, this);
       let s = params['token'];
       if (s!= undefined && s != '')
         this.doMagicTokenLogin(s);

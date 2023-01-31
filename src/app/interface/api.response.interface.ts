@@ -1,4 +1,5 @@
 
+
 export interface ROtp {
   otp: string,
   status: "success" | "fail",
@@ -136,4 +137,17 @@ export interface RDeleteMeeting{
 export interface Guest{
   name: string;
   email: string;
+}
+export interface SInformGuestSchedule{
+  to: Guest;
+  meeting: {
+    room: string;
+    start: number;
+  };
+  status: number;
+}
+
+export interface RInformGuestSchedule{
+  status: boolean
+  params: SInformGuestSchedule
 }

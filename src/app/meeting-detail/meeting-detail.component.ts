@@ -1,10 +1,12 @@
-import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
-import {MeetingItem} from "../interface/api.response.interface";
+import {Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Guest, MeetingItem, SInformGuestSchedule} from "../interface/api.response.interface";
 import {AppService} from "../services/app.service";
 import {Router} from "@angular/router";
 import {HttpsService} from "../services/https.service";
 import {AuthService} from "../services/auth.service";
 import {KeyValue} from '@angular/common';
+import {MeetingStatus} from "../services/const.service";
+import {VideoPlayerComponent} from "../video-player/video-player.component";
 
 @Component({
   selector: 'app-meeting-detail',
@@ -16,6 +18,8 @@ export class MeetingDetailComponent {
   meeting: Partial<MeetingItem> = {};
   flipped = false;
 
+  @ViewChild(VideoPlayerComponent, {static:false}) videoPlayer: VideoPlayerComponent = {} as VideoPlayerComponent;
+
   @Output()
   delete: EventEmitter<MeetingDetailComponent> = new EventEmitter<MeetingDetailComponent>();
   @Output()
@@ -26,7 +30,6 @@ export class MeetingDetailComponent {
   newlyCreated= false;
   urgency: number = 0;
 
-  videoId = "";
   showVideo = false;
 
 
@@ -40,7 +43,11 @@ export class MeetingDetailComponent {
     });
   }
 
-  constructor(private app: AppService, private router: Router, private https: HttpsService, private auth: AuthService) { }
+  constructor(private app: AppService,
+              private router: Router,
+              private https: HttpsService,
+              private auth: AuthService,
+              ) { }
   ngOnChanges(changes: SimpleChanges) {
     let m = changes['meeting'].currentValue;
     this.calculateWhen2Start(m);
@@ -65,7 +72,7 @@ export class MeetingDetailComponent {
   }
 
   get status() : string{
-    const status = ["New", "On Going", "Finished", "Abandoned", "Cancelled"];
+    const status = ["New", "Ongoing", "Finished", "Abandoned", "Cancelled"];
     let ret =  status[this.meeting.status ?? 4];
     if ( this.urgency < 0 && this.meeting.status == 0) {
       ret = "Abandoned";
@@ -132,12 +139,33 @@ export class MeetingDetailComponent {
   }
 
   onShowVideo(key: string, value: string) {
-    console.log(key,value, typeof value);
-    this.videoId = value;
+    console.log(key,value, typeof value, this, this.videoPlayer== undefined, this.videoPlayer);
     this.showVideo = true;
+    setTimeout(()=>{
+      let id = parseInt(value,10);
+      this.videoPlayer.start(id);
+    },1); //allow change detection to work for the template.
+
+
   }
 
-  onInformGuest(g: { email: string; name: string }) {
-    console.log(" inform guest ", g.name, g.email);
+  onInformGuest(g: Guest) {
+    let input : SInformGuestSchedule = {
+      "to" : g,
+      "meeting": {
+        "room": this.meeting.room ?? "",
+        "start": this.meeting.start?? 0
+      },
+      status: this.meeting.status ?? MeetingStatus.New
+    };
+
+    this.https.informGuestMeetingCreated(input).subscribe(
+      data => {
+        console.log("TODO", data);
+        if (data.status){
+          console.log("successful informed ",  g);
+        }
+      }
+    );
   }
 }

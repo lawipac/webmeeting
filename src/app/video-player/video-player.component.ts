@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, Output} from '@angular/core';
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import Player from '@vimeo/player';
 
 @Component({
   selector: 'app-video-player',
@@ -7,24 +7,36 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
   styleUrls: ['./video-player.component.scss']
 })
 export class VideoPlayerComponent {
-  @Input()  videoId: string= "468176795";
-  @Input()  shown: boolean = false;
   @Output() closeButtonClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+  //@ts-ignore
+  @ViewChild('playerContainer') playerContainer: ElementRef;
+  player: any;
 
-  showPlayer = true;
+  showPlayer = false;
   loading = true;
-  constructor(private sanitizer: DomSanitizer, private cdRef : ChangeDetectorRef,) {
+  constructor() {
   }
+
   onCloseClicked(){
-    this.closeButtonClicked.emit(this.shown);
+    this.closeButtonClicked.emit(true);
     this.showPlayer = ! this.showPlayer;
     this.loading = ! this.loading;
   }
 
-  videoSrc(): string {
-    const url = "https://player.vimeo.com/video/" + this.videoId + "?h=457419dead&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479";
-    console.log (url);
-    return url;
+  start (videoId: number) {
+
+    this.player = new Player(this.playerContainer.nativeElement, {
+      id: videoId,
+      responsive: true
+    });
+
+    this.player.on('loaded', ()=>{
+      this.showPlayer = true;
+      this.loading = false;
+    });
+    this.player.on('play', function () {
+      console.log('played the video!');
+    });
   }
 
 }

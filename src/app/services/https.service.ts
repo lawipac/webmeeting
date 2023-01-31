@@ -3,11 +3,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import {
+  Guest,
   MeetingItem,
   meetingKey,
-  RDeleteMeeting, RJwt,
+  RDeleteMeeting, RInformGuestSchedule, RJwt,
   Rlogin,
-  ROtp, SJwt,
+  ROtp, SInformGuestSchedule, SJwt,
   SLogin, SLoginByToken,
   SQueryMeeting
 } from "../interface/api.response.interface";
@@ -26,6 +27,7 @@ export class HttpsService {
     ["jwt", this.app.env.apiBaseUrl + "/jwt"],
     ["meeting", this.app.env.apiBaseUrl + "/query/meetings"],
     ["recording", this.app.env.apiBaseUrl + "/query/recordings"],
+    ["inform/guest/schedule", this.app.env.apiBaseUrl + "inform/guest/schedule"],
   ]);
 
   constructor(private http: HttpClient,
@@ -39,7 +41,7 @@ export class HttpsService {
   private tryAutoLoginBySavedToken(){
 
     const savedToken = this.ls.getSecret().authToken;
-    console.log('auto login by savedToken', savedToken, this.ls);
+    //console.log('auto login by savedToken', savedToken, this.ls);
     if (savedToken != undefined && savedToken != "" ){
       let input :SLoginByToken = {
         email: this.ls.getMachine().email,
@@ -48,7 +50,11 @@ export class HttpsService {
       }
       this.loginByToken(input).subscribe(
         data => {
-          console.log('login by token', data);
+          if (environment.production){
+            console.log("login by token");
+          }else{
+            console.log('login by token - debug', data);
+          }
           if (data.status ) { // == true
             this.auth.setOtp(data.otp);
             this.auth.setTS(data.ts);
@@ -120,5 +126,11 @@ export class HttpsService {
       nick: this.auth.getNick()
     }
     return this.http.post<RJwt>(this.urlFor('jwt'), input);
+  }
+
+  public informGuestMeetingCreated(input: SInformGuestSchedule) : Observable<RInformGuestSchedule>{
+    return this.http.post<RInformGuestSchedule>(
+      this.urlFor("inform/guest/schedule"), input
+    );
   }
 }
