@@ -1,13 +1,13 @@
 {
   "name": "frontend",
-  "version": "1.0.2036",
+  "version": "1.0.2038",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --ssl --configuration=development --host 0.0.0.0  --disable-host-check",
     "prebuild": "npm --no-git-tag-version version patch",
     "build": "ng build --configuration=production",
-    "publish-dev": "ng build --configuration=development && cd ./serverless/  && sls client deploy --no-confirm && cd ../",
-    "publish-prod": "ng build --configuration=development && cd ./serverless/  && sls client deploy --stage prod --no-confirm && cd ../",
+    "publish-dev": "ng build --configuration=production && cd ./serverless/  && sls client deploy --no-confirm && cd ../",
+    "publish-prod": "ng build --configuration=production && cd ./serverless/  && sls client deploy --stage prod --no-confirm && cd ../",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

@@ -28,6 +28,7 @@ import { TopbarComponent } from './topbar/topbar.component';
 import { EmptyComponent } from './empty/empty.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import {SafePipe} from "./pipe/safe.pipe";
+import { JoinmeetingComponent } from './joinmeeting/joinmeeting.component';
 
 
 
@@ -50,7 +51,8 @@ import {SafePipe} from "./pipe/safe.pipe";
     TopbarComponent,
     EmptyComponent,
     VideoPlayerComponent,
-    SafePipe
+    SafePipe,
+    JoinmeetingComponent
   ],
   imports: [
     BrowserModule,

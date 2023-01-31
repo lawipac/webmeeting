@@ -27,7 +27,7 @@ export class HttpsService {
     ["jwt", this.app.env.apiBaseUrl + "/jwt"],
     ["meeting", this.app.env.apiBaseUrl + "/query/meetings"],
     ["recording", this.app.env.apiBaseUrl + "/query/recordings"],
-    ["inform/guest/schedule", this.app.env.apiBaseUrl + "inform/guest/schedule"],
+    ["inform/guest", this.app.env.apiBaseUrl + "/inform/guest"],
   ]);
 
   constructor(private http: HttpClient,
@@ -130,7 +130,7 @@ export class HttpsService {
 
   public informGuestMeetingCreated(input: SInformGuestSchedule) : Observable<RInformGuestSchedule>{
     return this.http.post<RInformGuestSchedule>(
-      this.urlFor("inform/guest/schedule"), input
+      this.urlFor("inform/guest"), input
     );
   }
 }

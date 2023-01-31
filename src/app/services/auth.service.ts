@@ -196,6 +196,7 @@ export class DebugLogin implements CanActivate {
       // if (environment.production == false){ // do fake login
       //   return this.auth.fakeLogin();
       // }
+      this.router.navigate(['/login']);
       return false;
     }
   }

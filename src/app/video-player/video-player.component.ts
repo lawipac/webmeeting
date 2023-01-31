@@ -34,6 +34,7 @@ export class VideoPlayerComponent {
       this.showPlayer = true;
       this.loading = false;
     });
+
     this.player.on('play', function () {
       console.log('played the video!');
     });
