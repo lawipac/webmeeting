@@ -8,9 +8,9 @@ import {
   meetingKey,
   RDeleteMeeting, RInformGuestSchedule, RJwt,
   Rlogin,
-  ROtp, SInformGuestSchedule, SJwt,
+  ROtp, RCanJoinMeeting, SInformGuestSchedule, SJwt,
   SLogin, SLoginByToken,
-  SQueryMeeting
+  SQueryMeeting, SCanJoinMeeting
 } from "../interface/api.response.interface";
 import {AppService} from "./app.service";
 import {environment} from "../../environments/environment";
@@ -132,5 +132,9 @@ export class HttpsService {
     return this.http.post<RInformGuestSchedule>(
       this.urlFor("inform/guest"), input
     );
+  }
+
+  public getSingleMeeting(input: SCanJoinMeeting): Observable<RCanJoinMeeting>{
+    return this.http.post<RCanJoinMeeting>(this.urlFor("meeting"),input);
   }
 }

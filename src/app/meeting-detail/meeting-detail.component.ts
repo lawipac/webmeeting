@@ -1,4 +1,13 @@
-import {Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {Guest, MeetingItem, SInformGuestSchedule} from "../interface/api.response.interface";
 import {AppService} from "../services/app.service";
 import {Router} from "@angular/router";
@@ -7,6 +16,8 @@ import {AuthService} from "../services/auth.service";
 import {KeyValue} from '@angular/common';
 import {MeetingStatus} from "../services/const.service";
 import {VideoPlayerComponent} from "../video-player/video-player.component";
+
+import { NotificationService } from "@progress/kendo-angular-notification";
 
 @Component({
   selector: 'app-meeting-detail',
@@ -19,6 +30,9 @@ export class MeetingDetailComponent {
   flipped = false;
 
   @ViewChild(VideoPlayerComponent, {static:false}) videoPlayer: VideoPlayerComponent = {} as VideoPlayerComponent;
+
+  //@ts-ignore
+  @ViewChild("container", { read: ViewContainerRef })  public container: ViewContainerRef;
 
   @Output()
   delete: EventEmitter<MeetingDetailComponent> = new EventEmitter<MeetingDetailComponent>();
@@ -33,7 +47,7 @@ export class MeetingDetailComponent {
   showVideo = false;
 
 
-  onEnterMeting() {
+  onEnterMeeting() {
     this.app.setCurrentMeetingRoom (this.meeting);
     this.app.startNoSleep();
     this.https.renewJwt().subscribe( data =>{
@@ -47,6 +61,7 @@ export class MeetingDetailComponent {
               private router: Router,
               private https: HttpsService,
               private auth: AuthService,
+              private notificationService: NotificationService
               ) { }
   ngOnChanges(changes: SimpleChanges) {
     let m = changes['meeting'].currentValue;
@@ -75,7 +90,7 @@ export class MeetingDetailComponent {
     const status = ["New", "Ongoing", "Finished", "Abandoned", "Cancelled"];
     let ret =  status[this.meeting.status ?? 4];
     if ( this.urgency < 0 && this.meeting.status == 0) {
-      ret = "Abandoned";
+      ret = "Finished";
     }else     if ( this.urgency > 0 && this.meeting.status == 0) {
       ret = "Scheduled";
     }else     if ( this.urgency == 0 && this.meeting.status == 0) {
@@ -151,6 +166,7 @@ export class MeetingDetailComponent {
 
   onInformGuest(g: Guest) {
     let input : SInformGuestSchedule = {
+      "bcc" : [ this.meeting.creator as string, "admin@biukop.com.au" ],
       "to" : g,
       "meeting": {
         "room": this.meeting.room ?? "",
@@ -162,10 +178,24 @@ export class MeetingDetailComponent {
     this.https.informGuestMeetingCreated(input).subscribe(
       data => {
         console.log("TODO", data);
-        if (data.status){
+        if (data){
           console.log("successful informed ",  g);
+          this.show(g.email);
         }
       }
     );
+  }
+
+
+  public show(email: string ): void {
+    this.notificationService.show({
+      content: `meeting invitation sent to ${email}`,
+      cssClass: "button-notification",
+      appendTo: this.container,
+      animation: { type: "fade", duration: 1400 },
+      position: { horizontal: "center", vertical: "bottom" },
+      type: { style: "warning", icon: true },
+      closable: true,
+    });
   }
 }

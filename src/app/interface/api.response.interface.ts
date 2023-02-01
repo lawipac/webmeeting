@@ -139,6 +139,7 @@ export interface Guest{
   email: string;
 }
 export interface SInformGuestSchedule{
+  bcc: string[];
   to: Guest;
   meeting: {
     room: string;
@@ -150,4 +151,23 @@ export interface SInformGuestSchedule{
 export interface RInformGuestSchedule{
   status: boolean
   params: SInformGuestSchedule
+}
+
+export interface SCanJoinMeeting {
+  query: string;
+  room: string;
+  start: number;
+  email: string;
+}
+
+export interface RCanJoinMeeting {
+  allowed: boolean;
+  meeting: MeetingItem | false;
+
+  user: string;
+  nick: string;
+
+  jwt: string;
+
+  s3: string;
 }

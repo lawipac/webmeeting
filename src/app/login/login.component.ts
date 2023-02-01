@@ -23,7 +23,7 @@ export class LoginComponent {
   magicTokenLogin = false;
   public registerForm: FormGroup = new FormGroup({
     nick: new FormControl(this.ls.nick, Validators.maxLength(20)),
-    otp: new FormControl(1111, [Validators.min(1000),Validators.max(9999)]),
+    otp: new FormControl('', [Validators.min(1000),Validators.max(9999)]),
     email: new FormControl(this.ls.email, Validators.email),
   });
   otpResponse: ROtp= { otp: "" } as ROtp;

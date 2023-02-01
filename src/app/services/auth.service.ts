@@ -93,7 +93,8 @@ export class AuthService {
 
   public isAuth(): boolean{
     //console.log("isAuth", this);
-    return this.authToken != "";
+    return this.authToken != "" ||
+      this.app.getMagicLinkJoinMeeting() && this.jwt != "";
   }
 
   public user(): string {
@@ -177,6 +178,7 @@ export class AuthGuard implements CanActivate {
       return true;
     }else{
       //let _ = this.router.navigate(['login']);
+      console.log("auth guard kills switch", this);
     }
     return false;
   }

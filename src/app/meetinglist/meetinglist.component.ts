@@ -104,6 +104,11 @@ export class MeetinglistComponent {
   private isMyMeeting(item: MeetingItem): boolean {
     let email = this.auth.user();
     email = email.toLowerCase();
+
+    if (item.public > 0 ){
+      return true;
+    }
+
     if (item.creator.toLowerCase() == email && this.auth.isModerator()){
       return true;
     }

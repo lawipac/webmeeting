@@ -152,9 +152,14 @@ export class VcComponent {
 
   handleVideoConferenceLeft = () => {
     console.log("handleVideoConferenceLeft");
-    //delete this.api;
-    let _ = this.router.navigate(['dash']);
     this.app.stopNoSleep();
+    //delete this.api;
+    if (this.app.getMagicLinkJoinMeeting()) {
+      this.auth.logout();
+      let _ = this.router.navigate(['login']);
+    } else{
+      let _ = this.router.navigate(['dash']);
+    }
   }
 
   handleMuteStatus = (audio:any) => {

@@ -1,5 +1,5 @@
 
-<div class="container" [ngClass]="{'deleted': deleted, 'newlyCreated': newlyCreated}" >
+<div class="container" [ngClass]="{'deleted': deleted, 'newlyCreated': newlyCreated}" #container>
 <div class="father" [ngClass]="{'flipped': flipped}">
   <div class="front" >
     <header (click)="frontClicked()" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }" >{{meeting.room}}  </header>
@@ -11,7 +11,7 @@
     </p>
     <p class="description">{{meeting.description | slice:0:250}}</p>
     <div class="button-group" *ngIf="canEnter">
-      <button kendoButton [themeColor]="'warning'" (click)="onEnterMeting()">Enter Meeting</button>
+      <button kendoButton [themeColor]="'warning'" (click)="onEnterMeeting()">Enter Meeting</button>
     </div>
     <div class="button-group" *ngIf="!canEnter">
       <p *ngIf="urgency >=0"> in {{ coming }}<br>
@@ -19,7 +19,7 @@
       <p *ngIf="urgency<0"> Meeting closed </p>
     </div>
   </div>
-  <div class="back">
+  <div class="back" >
     <header (click)="backClicked()" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }">
       <span class="k-icon k-i-change-manually k-i-change-manually k-color-dark k-icon-xl"></span> {{status}}
     </header>

@@ -10,6 +10,7 @@ import {ScheduleMeetingComponent} from "./schedule-meeting/schedule-meeting.comp
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {environment} from "../environments/environment";
 import {EmptyComponent} from "./empty/empty.component";
+import {JoinmeetingComponent} from "./joinmeeting/joinmeeting.component";
 
 
 
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'dash', canActivate:[AuthGuard], component: DashboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login/:token', component: LoginComponent },
+  { path: 'join/:token', component: JoinmeetingComponent },
   { path: '',   redirectTo: '/login', pathMatch: 'full' },
   { path: '**',  component: EmptyComponent},
 ];

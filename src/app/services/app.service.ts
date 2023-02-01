@@ -53,6 +53,15 @@ export class AppService {
     this.start = m.start?? 0;
   }
 
+  private _MagicLinkJoinMeeting = false;
+  public setMagicLInkJoinMeeting(v: boolean){
+    this._MagicLinkJoinMeeting = v;
+  }
+
+  public getMagicLinkJoinMeeting(): boolean{
+    return this._MagicLinkJoinMeeting;
+  }
+
   private meetingUrl= "";
   set CurrentMeetingURL(value: string){
     this.meetingUrl = value;
