@@ -114,9 +114,14 @@ export class AuthService {
   }
   public validJWT(room: string = ""): boolean {
     //decode jwt and match room
-    let decodedJWT = JSON.parse(window.atob(this.jwt.split('.')[1]));
-    console.log(decodedJWT);
-    return room!="" && (decodedJWT.room == "*" || decodedJWT.room == room);
+    try{
+      let decodedJWT = JSON.parse(window.atob(this.jwt.split('.')[1]));
+      //console.log(decodedJWT);
+      return room!="" && (decodedJWT.room == "*" || decodedJWT.room == room);
+    }catch (e) {
+      console.log(`invalid ${e} ${this.jwt} $this.jwt ${room}`)
+      return false;
+    }
   }
 
   public logout(){
