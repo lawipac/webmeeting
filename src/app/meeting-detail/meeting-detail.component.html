@@ -45,3 +45,21 @@
 </div>
 
 <app-video-player *ngIf="showVideo" (closeButtonClicked)=" onCloseVideo($event)"></app-video-player>
+
+
+
+
+<kendo-dialog
+  title="Message"
+  *ngIf="opened"
+  (close)="close('cancel')"
+  [minWidth]="250"
+  [width]="450"
+>
+  <p style="margin: 30px; text-align: center;">
+    {{dialogMessage}}
+  </p>
+  <kendo-dialog-actions>
+    <button kendoButton (click)="close('close')">OK, got it</button>
+  </kendo-dialog-actions>
+</kendo-dialog>

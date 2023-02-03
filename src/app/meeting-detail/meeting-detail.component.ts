@@ -49,11 +49,16 @@ export class MeetingDetailComponent {
 
   onEnterMeeting() {
     this.app.setCurrentMeetingRoom (this.meeting);
-    this.app.startNoSleep();
+
     this.https.renewJwt().subscribe( data =>{
         this.auth.setJwt (data.jwt);
-        this.app.CurrentMeetingURL = data.s3;
-        let _ = this.router.navigate(['vc']);
+        if  ( !this.auth.validJWT(this.app.jaasMeetingRoom) ){
+          this.dialogMessage = "You are not authorized";
+          this.opened = true;
+        }else{
+          this.app.CurrentMeetingURL = data.s3;
+          let _ = this.router.navigate(['vc']);
+        }
     });
   }
 
@@ -113,6 +118,8 @@ export class MeetingDetailComponent {
   }
 
   coming = "";
+  opened = false;
+  dialogMessage = "";
 
   tick():void{
     setTimeout( ()=>{
@@ -175,27 +182,44 @@ export class MeetingDetailComponent {
       status: this.meeting.status ?? MeetingStatus.New
     };
 
+    const m = this.meeting as MeetingItem;
+    if ( m.end < Date.now() || m.status >=2 ){
+      this.showMeetingPassed(g.email);
+      return;
+    }
+
     this.https.informGuestMeetingCreated(input).subscribe(
       data => {
         console.log("TODO", data);
         if (data){
           console.log("successful informed ",  g);
-          this.show(g.email);
+          this.showInformed(g.email);
         }
       }
     );
   }
 
+  public showInformed(email: string){
+    this.show(`meeting invitation sent to ${email}`);
+  }
 
-  public show(email: string ): void {
+  public showMeetingPassed(email: string){
+    this.show(`meeting closed, skip notification to ${email}`, 'error');
+  }
+
+  private show(info : string, style: "error" | "warning" | "none" | "success" | "info" | undefined ="warning" ): void {
     this.notificationService.show({
-      content: `meeting invitation sent to ${email}`,
+      content: info,
       cssClass: "button-notification",
       appendTo: this.container,
       animation: { type: "fade", duration: 1400 },
       position: { horizontal: "center", vertical: "bottom" },
-      type: { style: "warning", icon: true },
+      type: { style: style, icon: true },
       closable: true,
     });
+  }
+
+  close(cancel: string) {
+    this.opened = false;
   }
 }
