@@ -69,6 +69,10 @@ export class LoginComponent {
         const nick = email.split('@');
         this.registerForm.get('nick')?.setValue(nick[0]);
         this.cdRef.detectChanges();
+
+        this.dialogMessage=`Code sent, please check \n ${email}`;
+        this.opened = true;
+
       });
   }
 

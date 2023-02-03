@@ -23,8 +23,10 @@
     <header (click)="backClicked()" [ngClass]="{'past': urgency<0, 'now': urgency==0, 'future': urgency > 0 }">
       <span class="k-icon k-i-change-manually k-i-change-manually k-color-dark k-icon-xl"></span> {{status}}
     </header>
+    <div *ngIf="status == 'Finished' ">
     <button *ngFor="let v of meeting.videos | keyvalue " kendoButton [icon]="'play'" [themeColor]="'primary'"
             title="Meeting Recordings" (click)="onShowVideo(v.key, v.value)" class="video"></button>
+    </div>
     <p> Created on {{meeting.ts |  date:"MMMM d, y z"}} </p>
     <p>creator: {{meeting.creator}}</p>
     <button kendoButton *ngFor="let g of meeting.guests" [fillMode]="'flat'" (click)="onInformGuest(g)"
