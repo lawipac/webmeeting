@@ -149,7 +149,7 @@ export class AppService {
     if (this.noSleep.isEnabled)
       this.stopNoSleep();
     else
-      this.stopNoSleep();
+      this.startNoSleep();
   }
 
   public isMobileBrowser () {

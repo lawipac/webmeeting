@@ -62,7 +62,6 @@ export class JoinmeetingComponent {
             // actually join meeting
             this.app.setCurrentMeetingRoom( data.meeting as MeetingItem);
             this.app.setMagicLInkJoinMeeting(true);
-            this.app.startNoSleep();
             this.auth.setUser(data.user);
             this.auth.setNick(data.nick);
             this.auth.setJwt (data.jwt);

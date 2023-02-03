@@ -36,6 +36,13 @@ export class VcComponent {
     }
   }
 
+  ngOnInit(){
+    this.app.startNoSleep();
+  }
+  ngOnDestroy(){
+    this.app.stopNoSleep();
+  }
+
   back(): void {
     this.location.back()
   }

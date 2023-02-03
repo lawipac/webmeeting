@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "1.0.2041",
+  "version": "1.0.2045",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --ssl --configuration=development --host 0.0.0.0  --disable-host-check",
