@@ -28,7 +28,7 @@ export class JoinmeetingComponent {
     this.route.params.subscribe( params => {
       let s = params['token'];
       if (s!= undefined && s != ''){
-
+        this.auth.setOtj(s);
         this.doJoinMeeting(s);
 
       }else{

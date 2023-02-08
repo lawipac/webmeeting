@@ -21,6 +21,8 @@ export class AuthService {
   private email: string = "";
   private otp: string ="";
 
+  private otj: string = ""; // one time join token
+
   private jwt: string="";
 
 
@@ -61,9 +63,18 @@ export class AuthService {
     return Buffer.from(s).toString('base64');
   }
 
+  public x_biukop_otj(): string{
+    return this.otj;
+  }
+
   public setOtp(v : string) {
     this.otp = v;
   }
+
+  public setOtj(v : string) {
+    this.otj = v;
+  }
+
 
   public setTTL( v: number){
     this.ttl = v;
@@ -225,9 +236,22 @@ export class AuthInterceptor implements HttpInterceptor {
 
       });
     }else{
-      request = request.clone({
-        setHeaders: { Authorization: `Bearer unauthorized` }
-      });
+
+      const otj = this.auth.x_biukop_otj(); //one time join?
+      //set both otp and otj to the same as an echo for hte otj auth.
+      if (otj != ""){
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer unauthorized`,
+            'x-biukop-otp': this.auth.x_biukop_otj(),
+            'x-biukop-otj': this.auth.x_biukop_otj(),
+          }
+        });
+      }else {
+        request = request.clone({
+          setHeaders: { Authorization: `Bearer unauthorized` }
+        });
+      }
     }
     return next.handle(request);
   }
